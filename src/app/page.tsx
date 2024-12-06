@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { getServerSession } from "next-auth";
 import LoginButton from "@/components/LoginButton";
+import UserMenu from "@/components/UserMenu";
 
 export default async function Home() {
   const session = await getServerSession();
 
+  console.log(session, "session");
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       {/* Navigation Bar */}
@@ -18,24 +20,11 @@ export default async function Home() {
               height={32}
               className="dark:invert"
             />
-            <span className="text-xl font-bold">ETHIndia 2024</span>
+            <span className="text-xl font-bold">Hackathon Project</span>
           </div>
 
           <div className="flex items-center gap-4">
-            {session ? (
-              <div className="flex items-center gap-3">
-                <span className="text-sm">{session.user?.name}</span>
-                <Image
-                  className="rounded-full border-2 border-blue-500"
-                  src={session.user?.image || "/default-avatar.png"}
-                  alt="Profile"
-                  width={40}
-                  height={40}
-                />
-              </div>
-            ) : (
-              <LoginButton />
-            )}
+            {session?.user ? <UserMenu user={session.user} /> : <LoginButton />}
           </div>
         </div>
       </nav>
@@ -44,10 +33,12 @@ export default async function Home() {
       <main className="pt-24 px-4">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-center mb-6">
-            ETHIndia 2024
+            Welcome to Our Hackathon Project
           </h1>
           <p className="text-xl text-center text-gray-300 max-w-2xl mx-auto">
-            Sign in with Twitter to get started with our amazing features.
+            {session
+              ? `Welcome back, ${session.user.name}!`
+              : "Sign in with Twitter to get started with our amazing features."}
           </p>
         </div>
       </main>
