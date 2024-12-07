@@ -17,7 +17,7 @@ contract TicketsAppGateway is AppGatewayBase, Ownable {
         _setFeesData(feesData_);
     }
 
-    function claimAirdrop(address _instance, uint256 tokenId_) external async {
+    function mint(address _instance, uint256 tokenId_) external async {
         Tickets(_instance).mint(msg.sender, tokenId_, 1, "");
     }
 }
