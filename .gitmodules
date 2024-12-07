@@ -1,0 +1,3 @@
+[submodule "socket/lib/solady"]
+	path = socket/lib/solady
+	url = https://github.com/vectorized/solady
