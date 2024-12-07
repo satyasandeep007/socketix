@@ -56,7 +56,7 @@ export default function EventsPage() {
                   <option>Business</option>
                 </select>
               </div>
-              <button className="bg-[#B197FC] text-white px-8 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
+              <button className="bg-[#9B87FE] text-white px-8 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
                 Search
               </button>
             </div>
@@ -67,8 +67,8 @@ export default function EventsPage() {
                 onClick={() => setTimeFilter("all")}
                 className={`px-6 py-2 rounded-full ${
                   timeFilter === "all"
-                    ? "bg-[#B197FC] text-white"
-                    : "bg-white text-black hover:bg-[#B197FC] hover:text-white"
+                    ? "bg-[#9B87FE] text-white"
+                    : "bg-white text-black hover:bg-[#9B87FE] hover:text-white"
                 } transition-all`}
               >
                 All Events
@@ -77,8 +77,8 @@ export default function EventsPage() {
                 onClick={() => setTimeFilter("today")}
                 className={`px-6 py-2 rounded-full ${
                   timeFilter === "today"
-                    ? "bg-[#B197FC] text-white"
-                    : "bg-white text-black hover:bg-[#B197FC] hover:text-white"
+                    ? "bg-[#9B87FE] text-white"
+                    : "bg-white text-black hover:bg-[#9B87FE] hover:text-white"
                 } transition-all`}
               >
                 Today
@@ -87,8 +87,8 @@ export default function EventsPage() {
                 onClick={() => setTimeFilter("month")}
                 className={`px-6 py-2 rounded-full ${
                   timeFilter === "month"
-                    ? "bg-[#B197FC] text-white"
-                    : "bg-white text-black hover:bg-[#B197FC] hover:text-white"
+                    ? "bg-[#9B87FE] text-white"
+                    : "bg-white text-black hover:bg-[#9B87FE] hover:text-white"
                 } transition-all`}
               >
                 This Month
@@ -123,7 +123,7 @@ export default function EventsPage() {
                   key={city.code}
                   className="bg-white p-6 rounded-2xl text-center hover:shadow-md transition-all cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-[#B197FC] rounded-full mx-auto mb-3 flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[#9B87FE] rounded-full mx-auto mb-3 flex items-center justify-center">
                     <span className="text-white font-medium">{city.code}</span>
                   </div>
                   <h3 className="text-black font-medium mb-1">{city.name}</h3>
@@ -137,7 +137,7 @@ export default function EventsPage() {
 
           {/* CTA Section */}
           <section className="mb-20">
-            <div className="bg-[#B197FC] rounded-[2.5rem] p-16 text-center">
+            <div className="bg-[#9B87FE] rounded-[2.5rem] p-16 text-center">
               <h2 className="text-white text-4xl font-normal mb-6">
                 Want to organize an event?
               </h2>
@@ -145,7 +145,7 @@ export default function EventsPage() {
                 Organize and manage your events with our easy-to-use platform.
                 Reach more attendees and grow your community.
               </p>
-              <button className="bg-white text-[#B197FC] px-8 py-4 rounded-full hover:bg-opacity-90 transition-colors font-medium">
+              <button className="bg-white text-[#9B87FE] px-8 py-4 rounded-full hover:bg-opacity-90 transition-colors font-medium">
                 Start Organizing →
               </button>
             </div>

@@ -45,7 +45,7 @@ export default function EventDetailPage() {
           </h1>
           <Link
             href="/events"
-            className="text-[#B197FC] hover:text-[#9F82E3] transition-colors"
+            className="text-[#9B87FE] hover:text-[#9F82E3] transition-colors"
           >
             ← Back to Events
           </Link>
@@ -62,7 +62,7 @@ export default function EventDetailPage() {
           <div className="mb-8">
             <Link
               href="/events"
-              className="text-black/60 hover:text-[#B197FC] transition-colors"
+              className="text-black/60 hover:text-[#9B87FE] transition-colors"
             >
               ← Back to Events
             </Link>
@@ -89,7 +89,7 @@ export default function EventDetailPage() {
               <button
                 onClick={handleRegister}
                 disabled={isRegistered}
-                className={`bg-[#B197FC] text-white px-8 py-4 rounded-full transition-colors font-medium
+                className={`bg-[#9B87FE] text-white px-8 py-4 rounded-full transition-colors font-medium
                   ${
                     isRegistered
                       ? "opacity-50 cursor-not-allowed"
@@ -144,7 +144,7 @@ export default function EventDetailPage() {
                   )}&query_place_id=${event.placeId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 text-[#B197FC] hover:text-[#9F82E3] transition-colors inline-block"
+                  className="mt-4 text-[#9B87FE] hover:text-[#9F82E3] transition-colors inline-block"
                 >
                   View larger map →
                 </a>
@@ -159,7 +159,7 @@ export default function EventDetailPage() {
                   Organized by
                 </h3>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#B197FC] flex items-center justify-center text-white">
+                  <div className="w-12 h-12 rounded-full bg-[#9B87FE] flex items-center justify-center text-white">
                     {event.organizer?.name.charAt(0)}
                   </div>
                   <div>
@@ -188,7 +188,7 @@ export default function EventDetailPage() {
                   </div>
                   <div className="w-full bg-[#F8F8F9] rounded-full h-2">
                     <div
-                      className="bg-[#B197FC] h-2 rounded-full"
+                      className="bg-[#9B87FE] h-2 rounded-full"
                       style={{
                         width: `${(event.attendees / event.capacity) * 100}%`,
                       }}
@@ -200,7 +200,7 @@ export default function EventDetailPage() {
               {/* Share Button */}
               <button
                 onClick={handleShare}
-                className="w-full px-6 py-3 rounded-full border-2 border-[#B197FC] text-[#B197FC] font-medium hover:bg-[#B197FC] hover:text-white transition-all"
+                className="w-full px-6 py-3 rounded-full border-2 border-[#9B87FE] text-[#9B87FE] font-medium hover:bg-[#9B87FE] hover:text-white transition-all"
               >
                 Share Event
               </button>

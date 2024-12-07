@@ -18,8 +18,8 @@ const NavLink = ({ href, children, className = "" }: NavLinkProps) => {
       href={href}
       className={`${
         isActive
-          ? "text-[#B197FC] font-medium"
-          : "text-black hover:text-[#B197FC] transition-colors"
+          ? "text-[#9B87FE] font-medium"
+          : "text-black hover:text-[#9B87FE] transition-colors"
       } ${className}`}
     >
       {children}

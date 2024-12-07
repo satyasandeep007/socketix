@@ -57,7 +57,7 @@ export default function Home() {
                   <option>Business</option>
                 </select>
               </div>
-              <button className="bg-[#B197FC] text-white px-8 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
+              <button className="bg-[#9B87FE] text-white px-8 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
                 Search
               </button>
             </div>
@@ -68,8 +68,8 @@ export default function Home() {
                 onClick={() => setTimeFilter("all")}
                 className={`px-6 py-2 rounded-full ${
                   timeFilter === "all"
-                    ? "bg-[#B197FC] text-white"
-                    : "bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white"
+                    ? "bg-[#9B87FE] text-white"
+                    : "bg-[#F8F8F9] text-black hover:bg-[#9B87FE] hover:text-white"
                 } transition-all`}
               >
                 All Events
@@ -78,8 +78,8 @@ export default function Home() {
                 onClick={() => setTimeFilter("today")}
                 className={`px-6 py-2 rounded-full ${
                   timeFilter === "today"
-                    ? "bg-[#B197FC] text-white"
-                    : "bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white"
+                    ? "bg-[#9B87FE] text-white"
+                    : "bg-[#F8F8F9] text-black hover:bg-[#9B87FE] hover:text-white"
                 } transition-all`}
               >
                 Today
@@ -88,8 +88,8 @@ export default function Home() {
                 onClick={() => setTimeFilter("month")}
                 className={`px-6 py-2 rounded-full ${
                   timeFilter === "month"
-                    ? "bg-[#B197FC] text-white"
-                    : "bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white"
+                    ? "bg-[#9B87FE] text-white"
+                    : "bg-[#F8F8F9] text-black hover:bg-[#9B87FE] hover:text-white"
                 } transition-all`}
               >
                 This Month
@@ -124,7 +124,7 @@ export default function Home() {
                   key={city.code}
                   className="bg-white p-6 rounded-2xl text-center"
                 >
-                  <div className="w-12 h-12 bg-[#B197FC] rounded-full mx-auto mb-3 flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[#9B87FE] rounded-full mx-auto mb-3 flex items-center justify-center">
                     <span className="text-white font-medium">{city.code}</span>
                   </div>
                   <h3 className="text-black font-medium mb-1">{city.name}</h3>

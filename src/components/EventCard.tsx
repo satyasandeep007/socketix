@@ -29,7 +29,7 @@ const EventCard = ({ id, title, date, location, image }: EventCardProps) => {
               {location}
             </span>
           </div>
-          <button className="text-[#B197FC] hover:text-[#9F82E3] transition-colors font-medium">
+          <button className="text-[#9B87FE] hover:text-[#9F82E3] transition-colors font-medium">
             View Details →
           </button>
         </div>
