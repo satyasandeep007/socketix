@@ -1,0 +1,10 @@
+{
+  "transactions": [
+    {
+      "rpc": "https://rpc-socket-composer-testnet.t.conduit.xyz"
+    },
+    {
+      "rpc": "https://rpc-socket-composer-testnet.t.conduit.xyz"
+    }
+  ]
+}

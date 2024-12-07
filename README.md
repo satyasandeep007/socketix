@@ -53,7 +53,84 @@
    pnpm dev
    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the frontend.
+
+<br>
+
+## 🔗 Smart Contract Deployment Guide
+
+### Prerequisites
+
+- Install Foundry
+- Navigate to the socket directory: `cd socket`
+- Install dependencies: `forge install`
+
+### Deployment Steps
+
+1. **Setup Tickets Contract**
+
+   ```bash
+   forge script script/SetupTickets.s.sol --broadcast --skip-simulation
+   ```
+
+   This will generate the token deployer and app gateway addresses. Add these to your `.env` file:
+
+   ```env
+   TICKETS_DEPLOYER=<your_token_deployer_address>
+   TICKETS_APP_GATEWAY=<your_app_gateway_address>
+   ```
+
+2. **Deploy Tickets Contract**
+
+   ```bash
+   forge script script/DeployTickets.s.sol --broadcast --skip-simulation
+   ```
+
+   This deployment will generate transaction hashes for three networks:
+
+   - Arbitrum
+   - Optimism
+   - Base
+
+3. **Setup Fees and Deposit Funds**
+
+   ```bash
+   cast send 0x804Af74b5b3865872bEf354e286124253782FA95 "deposit(address,uint256,address)" \
+    0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE \
+    12000000000000000 \
+    TICKETS_DEPLOYER \
+    --value 12000000000000000 \
+    --rpc-url YOUR_RPC_URL \
+    --private-key YOUR_PRIVATE_KEY
+   ```
+
+4. **Get Contract Details**
+
+   - Visit the Socket Tech API endpoint with your transaction hash:
+
+   ```
+   https://apiv2.dev.socket.tech/getDetailsByTxHash?txHash=YOUR_TX_HASH
+   ```
+
+   You'll receive deployment details in this format:
+
+   ```json
+   {
+     "deployerDetails": {
+       "onChainAddress": "0xaf42dAd2B83e7e4643c9E89C1BbE6fF0AbA8A277",
+       "forwarderAddress": "0x67e519394797402345375C485376e358C6D78299",
+       "isForwarderDeployed": true
+     }
+   }
+   ```
+
+5. **Final Configuration**
+   Add the `onChainAddress` to your `.env` file:
+   ```env
+   CONTRACT_ADDRESS=<your_onchain_address>
+   ```
+
+Now your contract is deployed and configured for interaction with your application.
 
 <br>
 
