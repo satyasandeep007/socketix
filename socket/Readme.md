@@ -18,34 +18,35 @@ forge script script/SetupTickets.s.sol --broadcast --skip-simulation
 TICKETS_DEPLOYER="0x84CBDF578472cB07ea5BA4dFA5a319155253BFD0"
 TICKETS_APP_GATEWAY="0xC3eb56424077eb91889Bc102e400582378E77489"
 
-forge script script/DeployTickets.s.sol --broadcast  --skip-simulation
-
-
-
+forge script script/DeployTickets.s.sol --broadcast --skip-simulation
 
 cast send 0x804Af74b5b3865872bEf354e286124253782FA95 "deposit(address,uint256,address)" \
-    0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE \
-    12000000000000000 \
-    0xC3eb56424077eb91889Bc102e400582378E77489 \
-    --value 12000000000000000 \
-    --rpc-url https://rpc.ankr.com/eth_sepolia \
-    --private-key 
-
-
+ 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE \
+ 12000000000000000 \
+ 0xC3eb56424077eb91889Bc102e400582378E77489 \
+ --value 12000000000000000 \
+ --rpc-url https://rpc.ankr.com/eth_sepolia \
+ --private-key
 
     ##### 7625382
-✅  [Success] Hash: 0x803097fc7bc2e7f4df5b93464919e7ab74f8e5eb71abf343e0441bbf898ff2be
+
+✅ [Success] Hash: 0x803097fc7bc2e7f4df5b93464919e7ab74f8e5eb71abf343e0441bbf898ff2be
 Block: 1882
-Paid: 0.00009424536 ETH (9424536 gas * 0.01 gwei)
-
+Paid: 0.00009424536 ETH (9424536 gas \* 0.01 gwei)
 
 ##### 7625382
-✅  [Success] Hash: 0x9af7955587cd88cd5636c49bf45a565fe03620b7f62c6cb62defcbdd5b86149e
+
+✅ [Success] Hash: 0x9af7955587cd88cd5636c49bf45a565fe03620b7f62c6cb62defcbdd5b86149e
 Block: 1884
-Paid: 0.00009383894 ETH (9383894 gas * 0.01 gwei)
-
+Paid: 0.00009383894 ETH (9383894 gas \* 0.01 gwei)
 
 ##### 7625382
-✅  [Success] Hash: 0xedf8485babb2c8d0b8f0abc85593349c053482dacd8a3676fe1a022bf950f879
+
+✅ [Success] Hash: 0xedf8485babb2c8d0b8f0abc85593349c053482dacd8a3676fe1a022bf950f879
 Block: 1883
-Paid: 0.00009383894 ETH (9383894 gas * 0.01 gwei)
+Paid: 0.00009383894 ETH (9383894 gas \* 0.01 gwei)
+
+https://apiv2.dev.socket.tech/getDetailsByTxHash?txHash=0xedf8485babb2c8d0b8f0abc85593349c053482dacd8a3676fe1a022bf950f879
+
+"onChainAddress": "0x29Df8CB1503Cc95cd5f98c250bf10a404053f445",
+"forwarderAddress": "0x7D098db1cfEfD3925Dbdb514bEB03EFb042Adf15",

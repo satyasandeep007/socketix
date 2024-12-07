@@ -63,14 +63,13 @@ async function interactWithTickets(
 // Usage example:
 export async function example() {
   // You'll need to provide these:
-  const provider = new ethers.JsonRpcProvider(
-    "https://rpc.ankr.com/arbitrum_sepolia/99269737483678ab97f22150807333a260aa7adb6e0225111d069232da0ad99e"
-  );
+  const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
   const signer = new ethers.Wallet(
-    "0xc82db42d7ceaa3ec825793556a01e292a802be1d3b3abff50a03d59bf52ab037",
+    process.env.NEXT_PUBLIC_PRIVATE_KEY as string,
     provider
   );
-  const contractAddress = "0xC3eb56424077eb91889Bc102e400582378E77489";
+  const contractAddress = process.env
+    .NEXT_PUBLIC_TICKETS_CONTRACT_ADDRESS as string;
 
   const tickets = await interactWithTickets(contractAddress, signer);
   console.log(tickets);

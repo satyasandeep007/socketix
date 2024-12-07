@@ -55,6 +55,21 @@
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+cd socket
+
+forge install
+
+Run this
+
+forge script script/SetupTickets.s.sol --broadcast --skip-simulation
+
+now you will get token deployer and app gateway address
+
+copy paste token deployer and app gateway address in .env file
+
+now run this
+forge script script/DeployTickets.s.sol --broadcast --skip-simulation
+
 <br>
 
 ## 👥 Meet Our Team
