@@ -1,18 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-import "solady/tokens/ERC1155.sol"; // Changed from ERC20 to ERC1155
+import "solady/tokens/ERC1155.sol";
 
-contract My1155Token is ERC1155 {
+contract Tickets is ERC1155 {
     string private _name;
     string private _symbol;
-
     address public _SOCKET;
-
-    string private baseURI; // Add this line to store the base URI
+    string private baseURI;
 
     constructor(string memory name_, string memory symbol_) {
-        // Removed decimals parameter
         _name = name_;
         _symbol = symbol_;
         _SOCKET = msg.sender;

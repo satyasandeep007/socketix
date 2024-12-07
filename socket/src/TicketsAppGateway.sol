@@ -3,10 +3,10 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "socket-protocol/contracts/base/AppGatewayBase.sol";
 import "solady/auth/Ownable.sol";
-import "./MyToken.sol";
+import "./Tickets.sol";
 
-contract MyTokenAppGateway is AppGatewayBase, Ownable {
-    mapping(address => uint256) public airdropReceivers;
+contract TicketsAppGateway is AppGatewayBase, Ownable {
+    mapping(address => mapping(uint256 => uint256)) public airdropReceivers;
 
     constructor(
         address _addressResolver,
@@ -19,16 +19,17 @@ contract MyTokenAppGateway is AppGatewayBase, Ownable {
 
     function addAirdropReceivers(
         address[] calldata receivers_,
+        uint256[] calldata tokenIds_,
         uint256[] calldata amounts_
     ) external onlyOwner {
         for (uint256 i = 0; i < receivers_.length; i++) {
-            airdropReceivers[receivers_[i]] = amounts_[i];
+            airdropReceivers[receivers_[i]][tokenIds_[i]] = amounts_[i];
         }
     }
 
-    function claimAirdrop(address _instance) external async {
-        uint256 amount = airdropReceivers[msg.sender];
-        airdropReceivers[msg.sender] = 0;
-        MyToken(_instance).mint(msg.sender, amount);
+    function claimAirdrop(address _instance, uint256 tokenId_) external async {
+        uint256 amount = airdropReceivers[msg.sender][tokenId_];
+        airdropReceivers[msg.sender][tokenId_] = 0;
+        Tickets(_instance).mint(msg.sender, tokenId_, amount, "");
     }
 }
