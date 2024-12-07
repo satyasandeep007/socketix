@@ -29,7 +29,7 @@ export default function EventDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#F8F8F9] font-poppins">
-      <main className="pt-32 px-8">
+      <main className="pt-12 py-20 px-8">
         <div className="max-w-[1400px] mx-auto">
           {/* Breadcrumb */}
           <div className="mb-8">
@@ -94,14 +94,20 @@ export default function EventDetailPage() {
                   Location
                 </h2>
                 <p className="text-black/80 mb-4">{event.location}</p>
-                <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
+                <a
+                  href={`https://www.openstreetmap.org/?mlat=${event.latitude}&mlon=${event.longitude}#map=15/${event.latitude}/${event.longitude}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="aspect-[16/9] relative rounded-xl overflow-hidden block hover:opacity-90 transition-opacity"
+                >
                   <Image
-                    src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/pin-s+B197FC(77.5946,12.9716)/77.5946,12.9716,13,0/800x450@2x?access_token=YOUR_MAPBOX_TOKEN"
-                    alt="Event location map"
+                    src="/map.png"
+                    // src={`https://staticmap.openstreetmap.de/staticmap.php?center=${event.latitude},${event.longitude}&zoom=14&size=800x450&markers=${event.latitude},${event.longitude},purple`}
+                    alt="Event location - Click to view on OpenStreetMap"
                     fill
                     className="object-cover"
                   />
-                </div>
+                </a>
               </section>
             </div>
 

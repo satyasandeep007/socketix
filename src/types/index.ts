@@ -6,6 +6,8 @@ export type Event = {
   date: string;
   time: string;
   location: string;
+  latitude: number;
+  longitude: number;
   type: string;
   capacity: number;
   attendees: number;

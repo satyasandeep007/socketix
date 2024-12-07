@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         hostname: "api.mapbox.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "staticmap.openstreetmap.de",
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
