@@ -11,6 +11,7 @@ export type Event = {
   type: string;
   capacity: number;
   attendees: number;
+  placeId: string;
   organizer: User;
   image: {
     src: string;

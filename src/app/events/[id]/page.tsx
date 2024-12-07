@@ -1,13 +1,40 @@
 "use client";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { getEventById } from "@/lib/data";
 import EventImage from "@/components/EventImage";
+import { useState } from "react";
 
 export default function EventDetailPage() {
   const { id } = useParams();
   const event = getEventById(id as string);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  // Handle registration
+  const handleRegister = () => {
+    // Here you would typically make an API call to register
+    setIsRegistered(true);
+    alert("Successfully registered for the event!"); // Replace with proper notification
+  };
+
+  // Handle share
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: event?.title,
+          text: event?.description,
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.log("Error sharing:", error);
+      }
+    } else {
+      // Fallback for browsers that don't support native sharing
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!"); // Replace with proper notification
+    }
+  };
 
   if (!event) {
     return (
@@ -59,8 +86,17 @@ export default function EventDetailPage() {
                   {event.category}
                 </span>
               </div>
-              <button className="bg-[#B197FC] text-white px-8 py-4 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
-                Register for Event
+              <button
+                onClick={handleRegister}
+                disabled={isRegistered}
+                className={`bg-[#B197FC] text-white px-8 py-4 rounded-full transition-colors font-medium
+                  ${
+                    isRegistered
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-[#9F82E3]"
+                  }`}
+              >
+                {isRegistered ? "Registered ✓" : "Register for Event"}
               </button>
             </div>
 
@@ -94,19 +130,23 @@ export default function EventDetailPage() {
                   Location
                 </h2>
                 <p className="text-black/80 mb-4">{event.location}</p>
+                <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
+                  <iframe
+                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&q=place_id:${event.placeId}&zoom=15`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full border-none"
+                  />
+                </div>
                 <a
-                  href={`https://www.openstreetmap.org/?mlat=${event.latitude}&mlon=${event.longitude}#map=15/${event.latitude}/${event.longitude}`}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    event.location
+                  )}&query_place_id=${event.placeId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="aspect-[16/9] relative rounded-xl overflow-hidden block hover:opacity-90 transition-opacity"
+                  className="mt-4 text-[#B197FC] hover:text-[#9F82E3] transition-colors inline-block"
                 >
-                  <Image
-                    src="/map.png"
-                    // src={`https://staticmap.openstreetmap.de/staticmap.php?center=${event.latitude},${event.longitude}&zoom=14&size=800x450&markers=${event.latitude},${event.longitude},purple`}
-                    alt="Event location - Click to view on OpenStreetMap"
-                    fill
-                    className="object-cover"
-                  />
+                  View larger map →
                 </a>
               </section>
             </div>
@@ -158,7 +198,10 @@ export default function EventDetailPage() {
               </div>
 
               {/* Share Button */}
-              <button className="w-full px-6 py-3 rounded-full border-2 border-[#B197FC] text-[#B197FC] font-medium hover:bg-[#B197FC] hover:text-white transition-all">
+              <button
+                onClick={handleShare}
+                className="w-full px-6 py-3 rounded-full border-2 border-[#B197FC] text-[#B197FC] font-medium hover:bg-[#B197FC] hover:text-white transition-all"
+              >
                 Share Event
               </button>
             </div>

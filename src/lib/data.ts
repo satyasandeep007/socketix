@@ -36,6 +36,7 @@ export const dummyEvents: Event[] = [
       src: "/events/fitness.jpg",
       type: "fitness",
     },
+    placeId: "ChIJa9IGFXYXrjsRsRxlSYAkZRU",
   },
   {
     id: "2",
@@ -56,6 +57,7 @@ export const dummyEvents: Event[] = [
       src: "/events/hackathon.jpg",
       type: "hackathon",
     },
+    placeId: "ChIJa9IGFXYXrjsRsRxlSYAkZRU",
   },
   {
     id: "3",
@@ -76,6 +78,7 @@ export const dummyEvents: Event[] = [
       src: "/events/conference.jpg",
       type: "conference",
     },
+    placeId: "ChIJa9IGFXYXrjsRsRxlSYAkZRU",
   },
 ];
 
