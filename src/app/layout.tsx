@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { headers } from "next/headers";
 
-import ContextProvider from "./ProviderContext";
+import ContextProvider from "@/context/ProviderContext";
 import { Loading } from "@/layout/Loading";
 
 const poppins = Poppins({
