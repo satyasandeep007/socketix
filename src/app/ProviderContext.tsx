@@ -53,7 +53,7 @@ function ContextProvider({
         emailShowWallets: false,
       },
       allWallets: "HIDE",
-      themeMode: "light",
+      themeMode: "dark",
       themeColor: "#000000",
     });
   }, []); // Empty dependency array means this runs once on mount
