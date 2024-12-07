@@ -2,41 +2,46 @@
 
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <nav className="fixed w-full p-4 bg-slate-900/80 backdrop-blur-sm z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Image
-            src="/logo.svg"
-            alt="Logo"
-            width={32}
-            height={32}
-            className="dark:invert"
-          />
-          <span className="text-xl font-bold text-white">
-            <Link href="/">EventHub</Link>
-          </span>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <Link href="/events" className="text-white hover:text-gray-200">
-            Events
-          </Link>
-          <button className="text-white hover:text-gray-200">Calendars</button>
-          <button className="text-white hover:text-gray-200">Discover</button>
-
-          <>
-            <Link
-              href="/create"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              Create Event
+    <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50">
+      <div className="max-w-[1400px] mx-auto px-8 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#B197FC] flex items-center justify-center text-white font-medium">
+              E
+            </div>
+            <Link href="/" className="text-black font-medium text-xl">
+              EventHub
             </Link>
-            {/* <UserMenu user={session.user} /> */}
-          </>
+          </div>
+          <div className="flex items-center gap-10">
+            <Link href="/" className="text-[#B197FC] font-medium">
+              Home
+            </Link>
+            <Link
+              href="/events"
+              className="text-black hover:text-[#B197FC] transition-colors"
+            >
+              Events
+            </Link>
+            <Link
+              href="/categories"
+              className="text-black hover:text-[#B197FC] transition-colors"
+            >
+              Categories
+            </Link>
+            <Link
+              href="/organize"
+              className="text-black hover:text-[#B197FC] transition-colors"
+            >
+              Organize
+            </Link>
+            <button className="px-6 py-2.5 rounded-full border-2 border-[#B197FC] text-[#B197FC] font-medium hover:bg-[#B197FC] hover:text-white transition-all">
+              Sign in
+            </button>
+          </div>
         </div>
       </div>
     </nav>
