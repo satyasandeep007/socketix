@@ -28,7 +28,7 @@ export default async function RootLayout({
   const cookies = (await headers()).get("cookie");
   return (
     <html lang="en">
-      <body className={`${poppins.variable} font-poppins`}>
+      <body className={`${poppins.variable} font-poppins bg-white`}>
         <Loading>
           <ContextProvider cookies={cookies}>
             <Navbar />
