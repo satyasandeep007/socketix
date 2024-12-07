@@ -15,13 +15,13 @@ const icon = {
   },
 };
 
-export const Loading = ({ children }: any) => {
+export const Loading = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 5000);
   }, []);
 
   return !loading ? (

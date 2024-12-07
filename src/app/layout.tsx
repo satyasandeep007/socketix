@@ -1,11 +1,13 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/layout/Navbar";
-import { Loading } from "@/layout/Loading";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { headers } from "next/headers";
+
 import ContextProvider from "./ProviderContext";
+import { Loading } from "@/layout/Loading";
 
 const poppins = Poppins({
   subsets: ["latin"],

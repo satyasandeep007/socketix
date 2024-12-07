@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
 import { useAccount } from "wagmi";
 
 // Define the shape of the context
@@ -23,7 +29,13 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   console.log(address);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (address) {
+      setIsLoading(false);
+    }
+  }, [address]);
 
   const value: GlobalContextType = {
     isLoading,

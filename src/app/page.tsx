@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import EventCard from "@/components/EventCard";
 import { getAllEvents, cities } from "@/lib/data";
 
