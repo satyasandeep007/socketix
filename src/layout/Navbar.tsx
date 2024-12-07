@@ -3,7 +3,6 @@
 import Link from "next/link";
 import NavLink from "@/components/NavLink";
 import React from "react";
-import Image from "next/image";
 import { useAccount } from "wagmi";
 
 const Navbar = () => {
@@ -22,8 +21,12 @@ const Navbar = () => {
             <NavLink href="/" className="text-white">
               Home
             </NavLink>
-            <NavLink className="text-white" href="/events">Events</NavLink>
-            <NavLink className="text-white" href="/organize">Organize</NavLink>
+            <NavLink className="text-white" href="/events">
+              Events
+            </NavLink>
+            <NavLink className="text-white" href="/organize">
+              Organize
+            </NavLink>
 
             {!isConnected ? (
               <w3m-connect-button size="sm" />

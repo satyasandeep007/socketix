@@ -1,42 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import EventCard from "@/components/EventCard";
-import { getAllEvents, cities } from "@/lib/data";
-
 export default function Home() {
-  const allEvents = getAllEvents();
-  const [timeFilter, setTimeFilter] = useState<"all" | "today" | "month">(
-    "all"
-  );
-
-  const filteredEvents = allEvents.filter((event) => {
-    if (timeFilter === "all") return true;
-    const eventDate = new Date(event.date);
-    const today = new Date();
-
-    if (timeFilter === "today") {
-      return eventDate.toDateString() === today.toDateString();
-    }
-
-    if (timeFilter === "month") {
-      return eventDate.getMonth() === today.getMonth();
-    }
-
-    return true;
-  });
-
   return (
     <div className="h-[90vh] font-poppins">
       {/* Main Content */}
       <main className="pt-12 py-20 px-8">
         <div className="max-w-[1400px] mx-auto">
           {/* Hero Section */}
-          <section className="mb-24">
-            <h1 className="text-7xl font-light leading-tight mb-8 text-white">
-              Discover Events
+          <section className="my-24">
+            <h1
+              style={{ textShadow: "2px 2px 5px rgba(0, 0, 0, 0.3)" }}
+              className="text-7xl font-normal leading-tight  text-white w-3/4"
+            >
+              Discover the best events in your city on chain
             </h1>
-            <p className="text-white text-lg mb-10 max-w-xl font-light">
+            <p
+              style={{ textShadow: "1px 1px 5px rgba(0, 0, 0, 0.3)" }}
+              className="text-white text-xl mb-10 max-w-xl font-light"
+            >
               Explore popular events near you, browse by category, or check out
               community calendars.
             </p>
@@ -47,7 +28,7 @@ export default function Home() {
                 <input
                   type="text"
                   placeholder="Search events..."
-                  className="flex-1 outline-none text-black font-light"
+                  className="flex-1 outline-black text-black font-light focus:outline-none font-poppins"
                 />
                 <div className="w-px h-6 bg-gray-200"></div>
                 <select className="outline-none bg-transparent text-black font-light">
@@ -57,7 +38,7 @@ export default function Home() {
                   <option>Business</option>
                 </select>
               </div>
-              <button className="bg-black text-white px-8 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
+              <button className="bg-black text-white px-8 rounded-full hover:bg-gray-800 transition-colors font-medium">
                 Search
               </button>
             </div>
