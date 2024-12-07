@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { eventTypeImages } from "@/lib/images";
 
 type EventImageProps = {
   title: string;
@@ -9,13 +10,6 @@ type EventImageProps = {
   height?: number;
 };
 
-const eventImages = {
-  fitness: "/events/fitness.jpg",
-  hackathon: "/events/hackathon.jpg",
-  conference: "/events/conference.jpg",
-  default: "/events/event.jpg",
-};
-
 export default function EventImage({
   title,
   type,
@@ -24,7 +18,7 @@ export default function EventImage({
   width,
   height,
 }: EventImageProps) {
-  const imageSrc = eventImages[type] || eventImages.default;
+  const imageSrc = eventTypeImages[type] || eventTypeImages.default;
 
   if (fill) {
     return (

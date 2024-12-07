@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { eventCovers, getRandomCover } from "@/lib/images";
 
 export default function CreateEventPage() {
   const router = useRouter();
@@ -19,7 +20,15 @@ export default function CreateEventPage() {
     requireApproval: false,
     capacity: "Unlimited",
     theme: "Minimal",
+    coverImage: getRandomCover(),
   });
+
+  const [showCoverOptions, setShowCoverOptions] = useState(false);
+
+  const handleCoverChange = (newCover: string) => {
+    setFormData({ ...formData, coverImage: newCover });
+    setShowCoverOptions(false);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,25 +64,67 @@ export default function CreateEventPage() {
         <div className="max-w-4xl mx-auto grid grid-cols-[300px,1fr] gap-8">
           {/* Event Cover */}
           <div className="space-y-4">
-            <div className="aspect-square relative bg-slate-800 rounded-xl overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button className="p-2 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6 text-white"
+            <div className="relative">
+              <div className="aspect-square relative bg-slate-800 rounded-xl overflow-hidden">
+                <Image
+                  src={formData.coverImage}
+                  alt="Event cover"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => setShowCoverOptions(true)}
+                    className="p-2 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6 text-white"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
+
+              {/* Cover Options Modal */}
+              {showCoverOptions && (
+                <div className="absolute top-0 left-0 right-0 bg-slate-800 rounded-xl p-4 shadow-lg z-10">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-white font-medium">Choose Cover</h3>
+                    <button
+                      onClick={() => setShowCoverOptions(false)}
+                      className="text-gray-400 hover:text-white"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {eventCovers.map((cover, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleCoverChange(cover)}
+                        className="aspect-square relative rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500"
+                      >
+                        <Image
+                          src={cover}
+                          alt={`Cover option ${index + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="bg-slate-800 p-4 rounded-lg space-y-2">
