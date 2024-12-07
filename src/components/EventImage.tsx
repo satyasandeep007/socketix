@@ -39,10 +39,10 @@ export default function EventImage({
 }: EventImageProps) {
   const imageConfig = eventTypeImages[type] || eventTypeImages.default;
 
-  // For development, we can use placeholder images until we have real ones
+  // For development, use high-quality Picsum images
   const imageSrc =
     process.env.NODE_ENV === "development"
-      ? `https://picsum.photos/seed/${type}/${width}/${height}`
+      ? `https://picsum.photos/seed/${type}/${width * 2}/${height * 2}` // Double size for better quality
       : imageConfig.src;
 
   const imageProps = {
@@ -52,6 +52,8 @@ export default function EventImage({
     style: {
       backgroundColor: imageConfig.color,
     },
+    quality: 100, // Maximum quality
+    unoptimized: process.env.NODE_ENV === "development", // Prevent development optimization
   };
 
   if (fill) {
@@ -60,6 +62,7 @@ export default function EventImage({
         <Image
           {...imageProps}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className={`object-cover ${className}`}
           priority
         />
@@ -73,6 +76,7 @@ export default function EventImage({
         {...imageProps}
         width={width}
         height={height}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         className={`object-cover rounded-lg ${className}`}
       />
     </div>
