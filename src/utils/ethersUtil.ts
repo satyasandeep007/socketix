@@ -60,9 +60,8 @@ async function interactWithTickets(
   };
 }
 
-// Usage example:
-export async function example() {
-  // You'll need to provide these:
+// Separate example functions for better organization
+export async function getContractInfo() {
   const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
   const signer = new ethers.Wallet(
     process.env.NEXT_PUBLIC_PRIVATE_KEY as string,
@@ -72,14 +71,48 @@ export async function example() {
     .NEXT_PUBLIC_TICKETS_CONTRACT_ADDRESS as string;
 
   const tickets = await interactWithTickets(contractAddress, signer);
-  console.log(tickets);
 
-  // Get contract info
   const name = await tickets.getName();
   const symbol = await tickets.getSymbol();
-  const uri = await tickets.getUri(1);
 
   console.log("Contract Name:", name);
   console.log("Contract Symbol:", symbol);
-  console.log("Token URI for ID 1:", uri);
+
+  return { name, symbol };
+}
+
+export async function getTokenUri(tokenId: number) {
+  const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+  const signer = new ethers.Wallet(
+    process.env.NEXT_PUBLIC_PRIVATE_KEY as string,
+    provider
+  );
+  const contractAddress = process.env
+    .NEXT_PUBLIC_TICKETS_CONTRACT_ADDRESS as string;
+
+  const tickets = await interactWithTickets(contractAddress, signer);
+  const uri = await tickets.getUri(tokenId);
+
+  console.log("Token URI for ID", tokenId, ":", uri);
+  return uri;
+}
+
+export async function mintNewTicket(
+  toAddress: string,
+  tokenId: number,
+  amount: number
+) {
+  const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+  const signer = new ethers.Wallet(
+    process.env.NEXT_PUBLIC_PRIVATE_KEY as string,
+    provider
+  );
+  const contractAddress = process.env
+    .NEXT_PUBLIC_TICKETS_CONTRACT_ADDRESS as string;
+
+  const tickets = await interactWithTickets(contractAddress, signer);
+  const receipt = await tickets.mintTicket(toAddress, tokenId, amount);
+
+  console.log("Mint receipt:", receipt);
+  return receipt;
 }
