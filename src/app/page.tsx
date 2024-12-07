@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#F8F8F9] font-poppins">
       {/* Main Content */}
-      <main className="pt-32 px-8">
+      <main className="pt-12 py-20 px-8">
         <div className="max-w-[1400px] mx-auto">
           {/* Hero Section */}
           <section className="mb-24">

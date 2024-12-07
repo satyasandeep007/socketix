@@ -26,9 +26,7 @@ const Navbar = () => {
             </NavLink>
             <NavLink href="/events">Events</NavLink>
             <NavLink href="/organize">Organize</NavLink>
-            <button className="px-6 py-2 rounded-full bg-[#9B87FE] text-white font-medium hover:bg-[#9775fa] transition-all">
-              Sign in
-            </button>
+
             {!isConnected ? (
               <w3m-connect-button size="sm" />
             ) : (
