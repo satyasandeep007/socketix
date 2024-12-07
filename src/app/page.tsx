@@ -4,17 +4,18 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import LoginButton from "@/components/LoginButton";
 import UserMenu from "@/components/UserMenu";
-import ConnectWallet from "@/components/ConnectWallet";
-import TaskCard from "@/components/TaskCard";
-import NFTGallery from "@/components/NFTGallery";
+import EventCard from "@/components/EventCard";
+import { getAllEvents } from "@/lib/data";
+import Link from "next/link";
 
 export default function Home() {
   const { data: session } = useSession();
+  const events = getAllEvents();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-[#0f1825] to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
       {/* Navigation */}
-      <nav className="fixed w-full p-4 bg-gray-900/80 backdrop-blur-sm z-50">
+      <nav className="fixed w-full p-4 bg-slate-900/80 backdrop-blur-sm z-50">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Image
@@ -24,15 +25,25 @@ export default function Home() {
               height={32}
               className="dark:invert"
             />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 text-transparent bg-clip-text">
-              Tweet2Earn
-            </span>
+            <span className="text-xl font-bold text-white">EventHub</span>
           </div>
 
           <div className="flex items-center gap-4">
+            <Link href="/events" className="text-white hover:text-gray-200">
+              Events
+            </Link>
+            <button className="text-white hover:text-gray-200">
+              Calendars
+            </button>
+            <button className="text-white hover:text-gray-200">Discover</button>
             {session?.user ? (
               <>
-                <ConnectWallet />
+                <Link
+                  href="/create"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Create Event
+                </Link>
                 <UserMenu user={session.user} />
               </>
             ) : (
@@ -42,58 +53,57 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Main Content */}
       <main className="pt-32 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col items-center text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-300 text-transparent bg-clip-text">
-              Earn NFTs for Your Twitter Engagement
-            </h1>
-            <p className="text-xl text-gray-400 max-w-2xl mb-12">
-              Connect your Twitter account and wallet, engage with hashtags, and
-              earn unique NFTs based on your tweet performance.
-            </p>
+          <h1 className="text-3xl font-bold text-white mb-6">
+            Discover Events
+          </h1>
+          <p className="text-gray-400 mb-8">
+            Explore popular events near you, browse by category, or check out
+            community calendars.
+          </p>
 
-            {session ? (
-              <div className="w-full">
-                {/* Active Tasks Section */}
-                <div className="mb-16">
-                  <h2 className="text-2xl font-bold text-white mb-6">
-                    Active Tasks
-                  </h2>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <TaskCard
-                      hashtag="#Web3Builders"
-                      likesRequired={100}
-                      nftReward="/nft-preview-1.png"
-                      deadline="2024-04-01"
-                    />
-                    <TaskCard
-                      hashtag="#ETHGlobal"
-                      likesRequired={50}
-                      nftReward="/nft-preview-2.png"
-                      deadline="2024-03-25"
-                    />
-                    {/* Add more TaskCards as needed */}
-                  </div>
-                </div>
+          {/* Popular Events Section */}
+          <div className="mb-12">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold text-white">
+                Popular Events
+              </h2>
+              <button className="text-blue-400 hover:text-blue-300">
+                View All
+              </button>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {events.map((event) => (
+                <EventCard
+                  key={event.id}
+                  id={event.id}
+                  title={event.title}
+                  date={`${event.date} ${event.time}`}
+                  location={event.location}
+                  image={event.image}
+                />
+              ))}
+            </div>
+          </div>
 
-                {/* Your NFTs Section */}
-                <div>
-                  <h2 className="text-2xl font-bold text-white mb-6">
-                    Your Earned NFTs
-                  </h2>
-                  <NFTGallery />
+          {/* Explore Cities Section */}
+          <div>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              Explore Local Events
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {/* City Card Example */}
+              <div className="bg-slate-800 p-4 rounded-lg text-center">
+                <div className="w-12 h-12 bg-blue-600 rounded-full mx-auto mb-2 flex items-center justify-center">
+                  <span className="text-white text-xl">SF</span>
                 </div>
+                <h3 className="text-white">San Francisco</h3>
+                <p className="text-gray-400 text-sm">24 Events</p>
               </div>
-            ) : (
-              <div className="flex flex-col items-center gap-6">
-                <LoginButton />
-                <p className="text-sm text-gray-500">
-                  Connect your Twitter account to start earning NFTs
-                </p>
-              </div>
-            )}
+              {/* Add more city cards */}
+            </div>
           </div>
         </div>
       </main>
