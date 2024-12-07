@@ -64,15 +64,25 @@ const TestPage = () => {
       alert("Please connect your wallet using the button in the navbar");
       return;
     }
-
-    console.log("Minting ticket...");
     try {
+      console.log("Minting with params:", {
+        address: process.env.NEXT_PUBLIC_TICKETS_CONTRACT_ADDRESS,
+        tokenId,
+        mintAmount,
+        userAddress: address,
+      });
+
       writeContract({
         address: process.env
           .NEXT_PUBLIC_TICKETS_CONTRACT_ADDRESS as `0x${string}`,
         abi: ticketsABI,
         functionName: "mint",
-        args: [address!, BigInt(tokenId), BigInt(mintAmount), "0x"],
+        args: [
+          address!,
+          BigInt(tokenId),
+          BigInt(mintAmount),
+          "0x" as `0x${string}`,
+        ],
       });
     } catch (error) {
       console.error("Error minting ticket:", error);
