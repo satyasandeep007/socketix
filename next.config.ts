@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         hostname: "picsum.photos",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.mapbox.com",
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
