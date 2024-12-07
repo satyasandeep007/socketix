@@ -17,7 +17,7 @@ const Navbar = () => {
               <Image src="/logo.png" alt="EventHub" width={24} height={24} />
             </div>
             <Link href="/" className="text-black font-medium text-xl">
-              EventHub
+              Socketix
             </Link>
           </div>
           <div className="flex items-center gap-8">
