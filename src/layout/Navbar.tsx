@@ -3,6 +3,7 @@
 import Link from "next/link";
 import NavLink from "@/components/NavLink";
 import React from "react";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
@@ -11,7 +12,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-[#B197FC] flex items-center justify-center text-white font-medium">
-              E
+              <Image src="/logo.png" alt="EventHub" width={24} height={24} />
             </div>
             <Link href="/" className="text-black font-medium text-xl">
               EventHub

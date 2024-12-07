@@ -1,0 +1,21 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="128" cy="128" r="128" fill="#9C27B0"/>
+  
+  <!-- Calendar Base -->
+  <rect x="64" y="76" width="128" height="120" rx="8" fill="white" fill-opacity="0.95"/>
+  
+  <!-- Calendar Header -->
+  <rect x="64" y="76" width="128" height="32" rx="8" fill="white" fill-opacity="0.3"/>
+  
+  <!-- Calendar Lines -->
+  <path d="M84 128h88M84 160h88M84 192h88" stroke="white" stroke-opacity="0.3" stroke-width="2"/>
+  
+  <!-- Star/Event Indicators -->
+  <circle cx="108" cy="144" r="4" fill="#9C27B0"/>
+  <circle cx="148" cy="176" r="4" fill="#9C27B0"/>
+  
+  <!-- Clock Hand -->
+  <path d="M128 60v-16M128 60l24 24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="128" cy="60" r="24" stroke="white" stroke-width="4" fill="none"/>
+</svg>
