@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import NavLink from "@/components/NavLink";
 import React from "react";
 
 const Navbar = () => {
@@ -17,27 +18,9 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center gap-10">
-            <Link href="/" className="text-[#B197FC] font-medium">
-              Home
-            </Link>
-            <Link
-              href="/events"
-              className="text-black hover:text-[#B197FC] transition-colors"
-            >
-              Events
-            </Link>
-            <Link
-              href="/categories"
-              className="text-black hover:text-[#B197FC] transition-colors"
-            >
-              Categories
-            </Link>
-            <Link
-              href="/organize"
-              className="text-black hover:text-[#B197FC] transition-colors"
-            >
-              Organize
-            </Link>
+            <NavLink href="/">Home</NavLink>
+            <NavLink href="/events">Events</NavLink>
+            <NavLink href="/organize">Organize</NavLink>
             <button className="px-6 py-2.5 rounded-full border-2 border-[#B197FC] text-[#B197FC] font-medium hover:bg-[#B197FC] hover:text-white transition-all">
               Sign in
             </button>
