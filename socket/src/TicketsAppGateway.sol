@@ -17,19 +17,7 @@ contract TicketsAppGateway is AppGatewayBase, Ownable {
         _setFeesData(feesData_);
     }
 
-    function addAirdropReceivers(
-        address[] calldata receivers_,
-        uint256[] calldata tokenIds_,
-        uint256[] calldata amounts_
-    ) external onlyOwner {
-        for (uint256 i = 0; i < receivers_.length; i++) {
-            airdropReceivers[receivers_[i]][tokenIds_[i]] = amounts_[i];
-        }
-    }
-
     function claimAirdrop(address _instance, uint256 tokenId_) external async {
-        uint256 amount = airdropReceivers[msg.sender][tokenId_];
-        airdropReceivers[msg.sender][tokenId_] = 0;
-        Tickets(_instance).mint(msg.sender, tokenId_, amount, "");
+        Tickets(_instance).mint(msg.sender, tokenId_, 1, "");
     }
 }

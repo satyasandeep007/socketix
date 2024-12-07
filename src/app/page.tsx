@@ -27,16 +27,16 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-[#F8F8F9] font-poppins">
+    <div className="h-[90vh] font-poppins">
       {/* Main Content */}
       <main className="pt-12 py-20 px-8">
         <div className="max-w-[1400px] mx-auto">
           {/* Hero Section */}
           <section className="mb-24">
-            <h1 className="text-7xl font-light leading-tight mb-8 text-black">
+            <h1 className="text-7xl font-light leading-tight mb-8 text-white">
               Discover Events
             </h1>
-            <p className="text-black text-lg mb-10 max-w-xl font-light">
+            <p className="text-white text-lg mb-10 max-w-xl font-light">
               Explore popular events near you, browse by category, or check out
               community calendars.
             </p>
@@ -57,82 +57,9 @@ export default function Home() {
                   <option>Business</option>
                 </select>
               </div>
-              <button className="bg-[#9B87FE] text-white px-8 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
+              <button className="bg-black text-white px-8 rounded-full hover:bg-[#9F82E3] transition-colors font-medium">
                 Search
               </button>
-            </div>
-
-            {/* Time Filters */}
-            <div className="flex gap-4 mb-12">
-              <button
-                onClick={() => setTimeFilter("all")}
-                className={`px-6 py-2 rounded-full ${
-                  timeFilter === "all"
-                    ? "bg-[#9B87FE] text-white"
-                    : "bg-[#F8F8F9] text-black hover:bg-[#9B87FE] hover:text-white"
-                } transition-all`}
-              >
-                All Events
-              </button>
-              <button
-                onClick={() => setTimeFilter("today")}
-                className={`px-6 py-2 rounded-full ${
-                  timeFilter === "today"
-                    ? "bg-[#9B87FE] text-white"
-                    : "bg-[#F8F8F9] text-black hover:bg-[#9B87FE] hover:text-white"
-                } transition-all`}
-              >
-                Today
-              </button>
-              <button
-                onClick={() => setTimeFilter("month")}
-                className={`px-6 py-2 rounded-full ${
-                  timeFilter === "month"
-                    ? "bg-[#9B87FE] text-white"
-                    : "bg-[#F8F8F9] text-black hover:bg-[#9B87FE] hover:text-white"
-                } transition-all`}
-              >
-                This Month
-              </button>
-            </div>
-          </section>
-
-          {/* Events Grid */}
-          <section className="mb-20">
-            <div className="grid grid-cols-3 gap-8">
-              {filteredEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  id={event.id}
-                  title={event.title}
-                  date={`${event.date} ${event.time}`}
-                  location={event.location}
-                  image={event.image}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* Cities Section */}
-          <section className="mb-20">
-            <h2 className="text-2xl font-medium text-black mb-8">
-              Explore Local Events
-            </h2>
-            <div className="grid grid-cols-6 gap-6">
-              {cities.map((city) => (
-                <div
-                  key={city.code}
-                  className="bg-white p-6 rounded-2xl text-center"
-                >
-                  <div className="w-12 h-12 bg-[#9B87FE] rounded-full mx-auto mb-3 flex items-center justify-center">
-                    <span className="text-white font-medium">{city.code}</span>
-                  </div>
-                  <h3 className="text-black font-medium mb-1">{city.name}</h3>
-                  <p className="text-gray-600 text-sm">
-                    {city.eventCount} Events
-                  </p>
-                </div>
-              ))}
             </div>
           </section>
         </div>

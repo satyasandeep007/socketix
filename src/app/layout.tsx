@@ -28,11 +28,20 @@ export default async function RootLayout({
   const cookies = (await headers()).get("cookie");
   return (
     <html lang="en">
-      <body className={`${poppins.variable} font-poppins bg-white`}>
+      <body className={`${poppins.variable} font-poppins`}>
         <Loading>
           <ContextProvider cookies={cookies}>
-            <Navbar />
-            {children}
+            <div
+              className="h-[100vh]"
+              style={{
+                backgroundImage: "url(/toronto.jpg)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <Navbar />
+              {children}
+            </div>
             <ToastContainer
               position="top-right"
               autoClose={3000}
