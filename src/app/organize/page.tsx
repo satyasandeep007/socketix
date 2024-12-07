@@ -103,7 +103,7 @@ export default function CreateEventPage() {
                         <button
                           key={index}
                           onClick={() => handleCoverChange(cover)}
-                          className="aspect-square relative rounded-xl overflow-hidden hover:ring-2 hover:ring-[#9B87FE] transition-all"
+                          className="aspect-square relative rounded-xl overflow-hidden hover:ring-2 hover:ring-black transition-all"
                         >
                           <Image
                             src={cover}
@@ -242,7 +242,7 @@ export default function CreateEventPage() {
                     }
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-[#F8F8F9] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#9B87FE]"></div>
+                  <div className="w-11 h-6 bg-[#F8F8F9] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
                 </label>
               </div>
 
@@ -263,7 +263,7 @@ export default function CreateEventPage() {
             {/* Create Button */}
             <button
               type="submit"
-              className="w-full bg-[#9B87FE] text-white py-4 rounded-full hover:bg-[#9F82E3] transition-colors font-medium"
+              className="w-full bg-black text-white py-4 rounded-full hover:bg-[#9F82E3] transition-colors font-medium"
             >
               Create Event
             </button>
