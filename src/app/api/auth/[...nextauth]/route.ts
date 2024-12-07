@@ -12,9 +12,6 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account, profile }: any) {
-      console.log(token, "token");
-      console.log(account, "account");
-      console.log(profile, "profile");
       // Add Twitter-specific information to the token
       if (account) {
         token.accessToken = account.access_token;
@@ -22,16 +19,14 @@ const handler = NextAuth({
         token.userId = account.providerAccountId; // Twitter user ID
       }
       if (profile) {
-        token.email = profile.email; // Ensure email is included
-        token.username = profile.username || profile.screen_name; // Add username
+        token.username = profile.data?.username || null; // Extract username from the profile object
       }
       return token;
     },
     async session({ session, token }: any) {
       // Add Twitter-specific information to the session
       session.user.id = token.userId;
-      session.user.email = token.email;
-      session.user.username = token.username;
+      session.user.username = token.username; // Include username
       session.accessToken = token.accessToken;
       return session;
     },
