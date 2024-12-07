@@ -5,6 +5,7 @@ export const eventCovers = [
   "https://picsum.photos/seed/event3/800/800",
   "https://picsum.photos/seed/event4/800/800",
   "https://picsum.photos/seed/event5/800/800",
+
 ];
 
 export const eventTypeImages = {

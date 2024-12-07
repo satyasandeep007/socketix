@@ -26,6 +26,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookies = (await headers()).get("cookie");
+
+  const isHomePage = true;
   return (
     <html lang="en">
       <body className={`${poppins.variable} font-poppins`}>
@@ -33,13 +35,17 @@ export default async function RootLayout({
           <ContextProvider cookies={cookies}>
             <div
               className="h-[100vh]"
-              style={{
-                backgroundImage: "url(/toronto.jpg)",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              style={
+                isHomePage
+                  ? {
+                      backgroundImage: "url(/toronto.jpg)",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }
+                  : {}
+              }
             >
-              <Navbar />
+              <Navbar isHomePage={isHomePage} />
               {children}
             </div>
             <ToastContainer
