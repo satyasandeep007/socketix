@@ -3,12 +3,12 @@ pragma solidity ^0.8.13;
 
 import {Script} from "forge-std/Script.sol";
 import {console} from "forge-std/Console.sol";
-import {My1155TokenAppGateway} from "../src/My1155TokenAppGateway.sol";
-import {My1155TokenDeployer} from "../src/My1155TokenDeployer.sol";
+import {TicketsAppGateway} from "../src/TicketsAppGateway.sol";
+import {TicketsDeployer} from "../src/TicketsDeployer.sol";
 import {FeesData} from "lib/socket-protocol/contracts/common/Structs.sol";
 import {ETH_ADDRESS} from "lib/socket-protocol/contracts/common/Constants.sol";
 
-contract SetupMyToken is Script {
+contract SetupTickets is Script {
     function run() public {
         address addressResolver = vm.envAddress("ADDRESS_RESOLVER");
 
