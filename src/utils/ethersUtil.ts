@@ -1,13 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // ABI for the functions we'll use
-const ticketsABI = [
+export const ticketsABI = [
   {
     inputs: [
-      { name: "to_", type: "address" },
-      { name: "id_", type: "uint256" },
-      { name: "amount_", type: "uint256" },
-      { name: "data_", type: "bytes" },
+      {
+        internalType: "address",
+        name: "to_",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id_",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "amount_",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "data_",
+        type: "bytes",
+      },
     ],
     name: "mint",
     outputs: [],
@@ -16,22 +32,46 @@ const ticketsABI = [
   },
   {
     inputs: [],
-    name: "symbol",
-    outputs: [{ name: "", type: "string" }],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
-    name: "name",
-    outputs: [{ name: "", type: "string" }],
+    name: "symbol",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ name: "id_", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "id_",
+        type: "uint256",
+      },
+    ],
     name: "uri",
-    outputs: [{ name: "", type: "string" }],
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
