@@ -1,15 +1,15 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import Image from "next/image";
-import LoginButton from "@/components/LoginButton";
-import UserMenu from "@/components/UserMenu";
+// import LoginButton from "@/components/LoginButton";
+// import UserMenu from "@/components/UserMenu";
 import EventCard from "@/components/EventCard";
 import { getAllEvents } from "@/lib/data";
 import Link from "next/link";
 
 export default function Home() {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const events = getAllEvents();
 
   return (
@@ -36,19 +36,16 @@ export default function Home() {
               Calendars
             </button>
             <button className="text-white hover:text-gray-200">Discover</button>
-            {session?.user ? (
-              <>
-                <Link
-                  href="/create"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                >
-                  Create Event
-                </Link>
-                <UserMenu user={session.user} />
-              </>
-            ) : (
-              <LoginButton />
-            )}
+
+            <>
+              <Link
+                href="/create"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                Create Event
+              </Link>
+              {/* <UserMenu user={session.user} /> */}
+            </>
           </div>
         </div>
       </nav>

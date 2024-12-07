@@ -1,107 +1,231 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function CreateEventPage() {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    time: "",
+    title: "Event Name",
+    startDate: "",
+    startTime: "",
+    endDate: "",
+    endTime: "",
     location: "",
-    capacity: "",
+    description: "",
+    isPublic: true,
+    requireApproval: false,
+    capacity: "Unlimited",
+    theme: "Minimal",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Handle event creation
+    router.push("/");
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 pt-20">
-      <div className="max-w-2xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-white mb-8">Create New Event</h1>
+    <div className="min-h-screen bg-slate-900">
+      {/* Navigation */}
+      <nav className="fixed w-full p-4 bg-slate-900/80 backdrop-blur-sm z-50 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <Image
+              src={session?.user?.image || "/default-avatar.png"}
+              alt="Profile"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+            <span className="text-gray-400">Personal Calendar</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <button className="px-4 py-2 bg-slate-800 text-white rounded-lg">
+              Public
+            </button>
+          </div>
+        </div>
+      </nav>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-white mb-2">Event Title</label>
+      {/* Main Content */}
+      <main className="pt-20 px-4">
+        <div className="max-w-4xl mx-auto grid grid-cols-[300px,1fr] gap-8">
+          {/* Event Cover */}
+          <div className="space-y-4">
+            <div className="aspect-square relative bg-slate-800 rounded-xl overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button className="p-2 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-slate-800 p-4 rounded-lg space-y-2">
+              <label className="block text-sm text-gray-400">Theme</label>
+              <select
+                value={formData.theme}
+                onChange={(e) =>
+                  setFormData({ ...formData, theme: e.target.value })
+                }
+                className="w-full bg-slate-700 text-white p-2 rounded-lg"
+              >
+                <option>Minimal</option>
+                <option>Modern</option>
+                <option>Classic</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Event Details Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
             <input
               type="text"
-              className="w-full p-2 rounded-lg bg-slate-800 text-white border border-slate-700"
               value={formData.title}
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
+              className="w-full bg-transparent text-4xl font-bold text-white border-none focus:outline-none focus:ring-0"
             />
-          </div>
 
-          <div>
-            <label className="block text-white mb-2">Description</label>
-            <textarea
-              className="w-full p-2 rounded-lg bg-slate-800 text-white border border-slate-700 h-32"
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-            />
-          </div>
+            {/* Date and Time */}
+            <div className="bg-slate-800 p-4 rounded-lg space-y-4">
+              <div className="grid grid-cols-[auto,1fr,auto] gap-4 items-center">
+                <span className="text-gray-400">Start</span>
+                <input
+                  type="date"
+                  value={formData.startDate}
+                  onChange={(e) =>
+                    setFormData({ ...formData, startDate: e.target.value })
+                  }
+                  className="bg-slate-700 text-white p-2 rounded-lg"
+                />
+                <input
+                  type="time"
+                  value={formData.startTime}
+                  onChange={(e) =>
+                    setFormData({ ...formData, startTime: e.target.value })
+                  }
+                  className="bg-slate-700 text-white p-2 rounded-lg"
+                />
+              </div>
+              <div className="grid grid-cols-[auto,1fr,auto] gap-4 items-center">
+                <span className="text-gray-400">End</span>
+                <input
+                  type="date"
+                  value={formData.endDate}
+                  onChange={(e) =>
+                    setFormData({ ...formData, endDate: e.target.value })
+                  }
+                  className="bg-slate-700 text-white p-2 rounded-lg"
+                />
+                <input
+                  type="time"
+                  value={formData.endTime}
+                  onChange={(e) =>
+                    setFormData({ ...formData, endTime: e.target.value })
+                  }
+                  className="bg-slate-700 text-white p-2 rounded-lg"
+                />
+              </div>
+            </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-white mb-2">Date</label>
+            {/* Location */}
+            <div className="bg-slate-800 p-4 rounded-lg">
               <input
-                type="date"
-                className="w-full p-2 rounded-lg bg-slate-800 text-white border border-slate-700"
-                value={formData.date}
+                type="text"
+                placeholder="Add Event Location"
+                value={formData.location}
                 onChange={(e) =>
-                  setFormData({ ...formData, date: e.target.value })
+                  setFormData({ ...formData, location: e.target.value })
                 }
+                className="w-full bg-transparent text-white placeholder-gray-500 border-none focus:outline-none focus:ring-0"
+              />
+              <p className="text-sm text-gray-500">
+                Offline location or virtual link
+              </p>
+            </div>
+
+            {/* Description */}
+            <div className="bg-slate-800 p-4 rounded-lg">
+              <textarea
+                placeholder="Add Description"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+                className="w-full bg-transparent text-white placeholder-gray-500 border-none focus:outline-none focus:ring-0 min-h-[100px]"
               />
             </div>
-            <div>
-              <label className="block text-white mb-2">Time</label>
-              <input
-                type="time"
-                className="w-full p-2 rounded-lg bg-slate-800 text-white border border-slate-700"
-                value={formData.time}
-                onChange={(e) =>
-                  setFormData({ ...formData, time: e.target.value })
-                }
-              />
+
+            {/* Event Options */}
+            <div className="bg-slate-800 p-4 rounded-lg space-y-4">
+              <h3 className="text-white font-medium">Event Options</h3>
+
+              {/* Tickets */}
+              <div className="flex justify-between items-center">
+                <span className="text-gray-400">Tickets</span>
+                <span className="text-gray-400">Free</span>
+              </div>
+
+              {/* Approval */}
+              <div className="flex justify-between items-center">
+                <span className="text-gray-400">Require Approval</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formData.requireApproval}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        requireApproval: e.target.checked,
+                      })
+                    }
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+
+              {/* Capacity */}
+              <div className="flex justify-between items-center">
+                <span className="text-gray-400">Capacity</span>
+                <input
+                  type="text"
+                  value={formData.capacity}
+                  onChange={(e) =>
+                    setFormData({ ...formData, capacity: e.target.value })
+                  }
+                  className="bg-transparent text-gray-400 text-right focus:outline-none"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-white mb-2">Location</label>
-            <input
-              type="text"
-              className="w-full p-2 rounded-lg bg-slate-800 text-white border border-slate-700"
-              value={formData.location}
-              onChange={(e) =>
-                setFormData({ ...formData, location: e.target.value })
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-white mb-2">Capacity</label>
-            <input
-              type="number"
-              className="w-full p-2 rounded-lg bg-slate-800 text-white border border-slate-700"
-              value={formData.capacity}
-              onChange={(e) =>
-                setFormData({ ...formData, capacity: e.target.value })
-              }
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Create Event
-          </button>
-        </form>
-      </div>
+            {/* Create Button */}
+            <button
+              type="submit"
+              className="w-full bg-white text-slate-900 py-3 rounded-lg hover:bg-gray-100 transition-colors font-medium"
+            >
+              Create Event
+            </button>
+          </form>
+        </div>
+      </main>
     </div>
   );
 }
