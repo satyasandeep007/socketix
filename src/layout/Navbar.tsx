@@ -4,8 +4,10 @@ import Link from "next/link";
 import NavLink from "@/components/NavLink";
 import React from "react";
 import Image from "next/image";
+import { useAccount } from "wagmi";
 
 const Navbar = () => {
+  const { isConnected } = useAccount();
   return (
     <nav className="bg-[#F8F8F9] w-full">
       <div className="max-w-[1400px] mx-auto py-4">
@@ -27,6 +29,14 @@ const Navbar = () => {
             <button className="px-6 py-2 rounded-full bg-[#B197FC] text-white font-medium hover:bg-[#9775fa] transition-all">
               Sign in
             </button>
+            {!isConnected ? (
+              <w3m-connect-button size="sm" />
+            ) : (
+              <div className="flex items-center gap-2">
+                <w3m-network-button />
+                <w3m-account-button balance={"show"} />
+              </div>
+            )}
           </div>
         </div>
       </div>

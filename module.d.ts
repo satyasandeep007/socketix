@@ -1,0 +1,11 @@
+declare module "clsx";
+declare module "tailwind-merge";
+declare module "framer-motion";
+declare module "@tabler/icons-react";
+declare module "lucide-react";
+declare module "@tanstack/react-query";
+declare module "@web3modal/wagmi/react";
+declare module "wagmi";
+declare module "react-toastify";
+declare module "@web3modal/wagmi/react/config";
+declare module "@wagmi/core";
