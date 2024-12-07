@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 require("dotenv").config();
 
-async function deployMyToken() {
+async function test() {
   // Connect to provider
   const provider = new ethers.JsonRpcProvider(process.env.SOCKET_RPC);
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
@@ -27,7 +27,7 @@ async function deployMyToken() {
   await myTokenDeployer.deployContracts(84532);
 }
 
-deployMyToken()
+test()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);
