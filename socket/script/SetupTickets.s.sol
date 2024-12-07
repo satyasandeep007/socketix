@@ -5,8 +5,8 @@ import {Script} from "forge-std/Script.sol";
 import {console} from "forge-std/Console.sol";
 import {TicketsAppGateway} from "../src/TicketsAppGateway.sol";
 import {TicketsDeployer} from "../src/TicketsDeployer.sol";
-import {FeesData} from "lib/socket-protocol/contracts/common/Structs.sol";
-import {ETH_ADDRESS} from "lib/socket-protocol/contracts/common/Constants.sol";
+import {FeesData} from "socket-protocol/contracts/common/Structs.sol";
+import {ETH_ADDRESS} from "socket-protocol/contracts/common/Constants.sol";
 
 contract SetupTickets is Script {
     function run() public {
@@ -25,20 +25,20 @@ contract SetupTickets is Script {
             maxFees: 0.01 ether
         });
 
-        My1155TokenDeployer my1155TokenDeployer = new My1155TokenDeployer(
+        TicketsDeployer ticketsDeployer = new TicketsDeployer(
             addressResolver,
             feesData,
-            "My1155Token",
-            "M1155" // Removed decimals parameter
+            "Tickets",
+            "TICKETS"
         );
 
-        My1155TokenAppGateway my1155TokenAppGateway = new My1155TokenAppGateway(
+        TicketsAppGateway ticketsAppGateway = new TicketsAppGateway(
             addressResolver,
-            address(my1155TokenDeployer),
+            address(ticketsDeployer),
             feesData
         );
 
-        console.log("My1155TokenDeployer: ", address(my1155TokenDeployer));
-        console.log("My1155TokenAppGateway: ", address(my1155TokenAppGateway));
+        console.log("TicketsDeployer: ", address(ticketsDeployer));
+        console.log("TicketsAppGateway: ", address(ticketsAppGateway));
     }
 }
