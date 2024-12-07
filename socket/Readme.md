@@ -13,8 +13,13 @@ MYTOKEN_APP_GATEWAY="0x962D7be55A4d39b61c04Cf5ADe72D8eE275A7bCB"
 
 https://apiv2.dev.socket.tech/getDetailsByTxHash?txHash=0xa93902c5118e1bb0dd30f17d258a15f7362f05a91e297e4eacd3455d2e8368dc
 
-forge script script/DeployTickets.s.sol --broadcast  --skip-simulation
 forge script script/SetupTickets.s.sol --broadcast --skip-simulation
+
+TICKETS_DEPLOYER="0x84CBDF578472cB07ea5BA4dFA5a319155253BFD0"
+TICKETS_APP_GATEWAY="0xC3eb56424077eb91889Bc102e400582378E77489"
+
+forge script script/DeployTickets.s.sol --broadcast  --skip-simulation
+
 
 
 
