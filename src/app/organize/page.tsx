@@ -263,7 +263,7 @@ export default function CreateEventPage() {
             {/* Create Button */}
             <button
               type="submit"
-              className="w-full bg-black text-white py-4 rounded-full hover:bg-[#9F82E3] transition-colors font-medium"
+              className="w-full bg-black text-white py-4 rounded-full hover:bg-black] transition-colors font-medium"
             >
               Create Event
             </button>

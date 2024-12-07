@@ -45,7 +45,7 @@ export default function EventDetailPage() {
           </h1>
           <Link
             href="/events"
-            className="text-[#9B87FE] hover:text-[#9F82E3] transition-colors"
+            className="text-black hover:text-black] transition-colors"
           >
             ← Back to Events
           </Link>
@@ -62,7 +62,7 @@ export default function EventDetailPage() {
           <div className="mb-8">
             <Link
               href="/events"
-              className="text-black/60 hover:text-[#9B87FE] transition-colors"
+              className="text-black/60 hover:text-black transition-colors"
             >
               ← Back to Events
             </Link>
@@ -76,27 +76,34 @@ export default function EventDetailPage() {
               </h1>
               <p className="text-black/80 text-lg mb-8">{event.description}</p>
               <div className="flex flex-wrap gap-4 mb-8">
-                <span className="px-4 py-2 rounded-full bg-[#FFE34E20] text-black">
+                <span className="px-4 py-2 rounded-lg bg-[#FFE34E20] text-black">
                   {event.date} at {event.time}
                 </span>
-                <span className="px-4 py-2 rounded-full bg-[#B197FC20] text-black">
+                <span className="px-4 py-2 rounded-lg bg-[#B197FC20] text-black">
                   {event.location}
                 </span>
-                <span className="px-4 py-2 rounded-full bg-[#E2E8F0] text-black">
+                <span className="px-4 py-2 rounded-lg bg-[#E2E8F0] text-black">
                   {event.category}
                 </span>
               </div>
               <button
                 onClick={handleRegister}
                 disabled={isRegistered}
-                className={`bg-[#9B87FE] text-white px-8 py-4 rounded-full transition-colors font-medium
+                className={`bg-black text-white px-8 py-4 rounded-lg transition-colors font-medium
                   ${
                     isRegistered
                       ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-[#9F82E3]"
+                      : "hover:bg-black]"
                   }`}
               >
-                {isRegistered ? "Registered ✓" : "Register for Event"}
+                {isRegistered ? "Ticket Minted ✓" : "Buy Ticket"}
+              </button>
+              {/* Share Button */}
+              <button
+                onClick={handleShare}
+                className="bg-white border text-black px-8 py-4 rounded-lg transition-colors font-medium mx-2"
+              >
+                Share Event
               </button>
             </div>
 
@@ -115,7 +122,7 @@ export default function EventDetailPage() {
           <div className="grid lg:grid-cols-[2fr,1fr] gap-12">
             <div className="space-y-8">
               {/* About Section */}
-              <section className="bg-white rounded-2xl p-8 shadow-sm">
+              <section className="bg-white rounded-2xl p-8">
                 <h2 className="text-2xl font-medium text-black mb-4">
                   About this event
                 </h2>
@@ -125,12 +132,12 @@ export default function EventDetailPage() {
               </section>
 
               {/* Location Section */}
-              <section className="bg-white rounded-2xl p-8 shadow-sm">
+              <section className="bg-white rounded-2xl p-8">
                 <h2 className="text-2xl font-medium text-black mb-4">
                   Location
                 </h2>
                 <p className="text-black/80 mb-4">{event.location}</p>
-                <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
+                <div className="aspect-[16/9] relative rounded-lg overflow-hidden">
                   <iframe
                     src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&q=place_id:${event.placeId}&zoom=15`}
                     loading="lazy"
@@ -144,7 +151,7 @@ export default function EventDetailPage() {
                   )}&query_place_id=${event.placeId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 text-[#9B87FE] hover:text-[#9F82E3] transition-colors inline-block"
+                  className="mt-4 text-black hover:text-black] transition-colors inline-block"
                 >
                   View larger map →
                 </a>
@@ -159,7 +166,7 @@ export default function EventDetailPage() {
                   Organized by
                 </h3>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#9B87FE] flex items-center justify-center text-white">
+                  <div className="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white">
                     {event.organizer?.name.charAt(0)}
                   </div>
                   <div>
@@ -186,9 +193,9 @@ export default function EventDetailPage() {
                       {event.attendees} registered
                     </span>
                   </div>
-                  <div className="w-full bg-[#F8F8F9] rounded-full h-2">
+                  <div className="w-full bg-[#F8F8F9] rounded-lg h-2">
                     <div
-                      className="bg-[#9B87FE] h-2 rounded-full"
+                      className="bg-black h-2 rounded-lg"
                       style={{
                         width: `${(event.attendees / event.capacity) * 100}%`,
                       }}
@@ -196,14 +203,6 @@ export default function EventDetailPage() {
                   </div>
                 </div>
               </div>
-
-              {/* Share Button */}
-              <button
-                onClick={handleShare}
-                className="w-full px-6 py-3 rounded-full border-2 border-[#9B87FE] text-[#9B87FE] font-medium hover:bg-[#9B87FE] hover:text-white transition-all"
-              >
-                Share Event
-              </button>
             </div>
           </div>
         </div>
