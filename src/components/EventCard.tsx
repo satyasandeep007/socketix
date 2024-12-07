@@ -1,33 +1,41 @@
-import Link from "next/link";
 import EventImage from "./EventImage";
+import Link from "next/link";
 
 interface EventCardProps {
   id: string;
   title: string;
   date: string;
   location: string;
-  image: "fitness" | "hackathon" | "conference" | "default";
+  image: {
+    src: string;
+    type: "fitness" | "hackathon" | "conference" | "default";
+  };
 }
 
-export default function EventCard({
-  id,
-  title,
-  date,
-  location,
-  image,
-}: EventCardProps) {
+const EventCard = ({ id, title, date, location, image }: EventCardProps) => {
   return (
     <Link href={`/events/${id}`}>
-      <div className="bg-slate-800 rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all">
-        <div className="aspect-video relative">
-          <EventImage title={title} type={image} fill />
+      <div className="bg-white rounded-3xl overflow-hidden hover:shadow-lg transition-all">
+        <div className="relative h-48 w-full">
+          <EventImage title={title} type={image.type} fill />
         </div>
-        <div className="p-4">
-          <h3 className="text-white font-semibold mb-2">{title}</h3>
-          <p className="text-gray-400 text-sm">{date}</p>
-          <p className="text-gray-400 text-sm">{location}</p>
+        <div className="p-6">
+          <h3 className="text-xl font-medium text-black mb-2">{title}</h3>
+          <div className="flex flex-wrap gap-2 mb-4">
+            <span className="px-4 py-1 rounded-full bg-[#FFE34E20] text-black text-sm">
+              {date}
+            </span>
+            <span className="px-4 py-1 rounded-full bg-[#B197FC20] text-black text-sm">
+              {location}
+            </span>
+          </div>
+          <button className="text-[#B197FC] hover:text-[#9F82E3] transition-colors font-medium">
+            View Details →
+          </button>
         </div>
       </div>
     </Link>
   );
-}
+};
+
+export default EventCard;

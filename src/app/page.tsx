@@ -1,86 +1,90 @@
-import React from "react";
-import Image from "next/image";
+"use client";
 
-const Home = () => {
-  const upcomingEvents = [
-    {
-      title: "Tech Conference 2024",
-      category: "Technology",
-      date: "Mar 15",
-      location: "Jakarta",
-      type: "Full time",
-      icon: "/icons/tech.svg",
-    },
-    {
-      title: "Design Summit",
-      category: "Design",
-      date: "Mar 20",
-      location: "Sukabumi",
-      type: "Part time",
-      icon: "/icons/design.svg",
-    },
-    {
-      title: "Business Workshop",
-      category: "Business",
-      date: "Mar 25",
-      location: "Remote",
-      type: "Beginner",
-      icon: "/icons/business.svg",
-    },
-  ];
+import { useState } from "react";
+import Link from "next/link";
+import EventCard from "@/components/EventCard";
+import { getAllEvents, cities } from "@/lib/data";
+
+export default function Home() {
+  const allEvents = getAllEvents();
+  const [timeFilter, setTimeFilter] = useState<"all" | "today" | "month">(
+    "all"
+  );
+
+  const filteredEvents = allEvents.filter((event) => {
+    if (timeFilter === "all") return true;
+    const eventDate = new Date(event.date);
+    const today = new Date();
+
+    if (timeFilter === "today") {
+      return eventDate.toDateString() === today.toDateString();
+    }
+
+    if (timeFilter === "month") {
+      return eventDate.getMonth() === today.getMonth();
+    }
+
+    return true;
+  });
 
   return (
-    <main className="min-h-screen bg-[#F8F8F9] font-poppins">
-      <div className="max-w-[1400px] mx-auto px-8 py-6">
-        {/* Header */}
-        <nav className="flex items-center justify-between mb-16">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#B197FC] flex items-center justify-center text-white font-medium">
-              E
+    <div className="min-h-screen bg-[#F8F8F9] font-poppins">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50">
+        <div className="max-w-[1400px] mx-auto px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-[#B197FC] flex items-center justify-center text-white font-medium">
+                E
+              </div>
+              <Link href="/" className="text-black font-medium text-xl">
+                EventHub
+              </Link>
             </div>
-            <span className="text-black font-medium text-xl">EventHub</span>
+            <div className="flex items-center gap-10">
+              <Link href="/" className="text-[#B197FC] font-medium">
+                Home
+              </Link>
+              <Link
+                href="/events"
+                className="text-black hover:text-[#B197FC] transition-colors"
+              >
+                Events
+              </Link>
+              <Link
+                href="/categories"
+                className="text-black hover:text-[#B197FC] transition-colors"
+              >
+                Categories
+              </Link>
+              <Link
+                href="/organize"
+                className="text-black hover:text-[#B197FC] transition-colors"
+              >
+                Organize
+              </Link>
+              <button className="px-6 py-2.5 rounded-full border-2 border-[#B197FC] text-[#B197FC] font-medium hover:bg-[#B197FC] hover:text-white transition-all">
+                Sign in
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-10">
-            <a href="#" className="text-[#B197FC] font-medium">
-              Events
-            </a>
-            <a
-              href="#"
-              className="text-black hover:text-[#B197FC] transition-colors"
-            >
-              Categories
-            </a>
-            <a
-              href="#"
-              className="text-black hover:text-[#B197FC] transition-colors"
-            >
-              Organize
-            </a>
-            <a
-              href="#"
-              className="text-black hover:text-[#B197FC] transition-colors"
-            >
-              About
-            </a>
-            <button className="px-6 py-2.5 rounded-full border-2 border-[#B197FC] text-[#B197FC] font-medium hover:bg-[#B197FC] hover:text-white transition-all">
-              Sign in
-            </button>
-          </div>
-        </nav>
+        </div>
+      </nav>
 
-        {/* Hero Section */}
-        <section className="flex justify-between items-center mb-24">
-          <div className="max-w-2xl">
+      {/* Main Content */}
+      <main className="pt-32 px-8">
+        <div className="max-w-[1400px] mx-auto">
+          {/* Hero Section */}
+          <section className="mb-24">
             <h1 className="text-7xl font-light leading-tight mb-8 text-black">
-              Find The Perfect Event Near You
+              Discover Events
             </h1>
             <p className="text-black text-lg mb-10 max-w-xl font-light">
-              Discover and join amazing events happening in your area. From tech
-              conferences to art workshops, find experiences that match your
-              interests.
+              Explore popular events near you, browse by category, or check out
+              community calendars.
             </p>
 
-            {/* Search Bar */}
+            {/* Search and Filter */}
             <div className="flex gap-4 mb-12">
               <div className="flex-1 bg-white rounded-full px-6 py-4 shadow-sm flex items-center gap-4">
                 <input
@@ -101,115 +105,81 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="flex gap-12">
-              <div>
-                <h3 className="text-3xl font-medium text-black mb-1">500+</h3>
-                <p className="text-black font-light">Events Monthly</p>
-              </div>
-              <div>
-                <h3 className="text-3xl font-medium text-black mb-1">100k+</h3>
-                <p className="text-black font-light">Active Users</p>
-              </div>
-              <div>
-                <h3 className="text-3xl font-medium text-black mb-1">50+</h3>
-                <p className="text-black font-light">Categories</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative">
-            <Image
-              src="/event-illustration.png"
-              alt="Events Illustration"
-              width={600}
-              height={500}
-              className="transform"
-            />
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-4 h-4 bg-[#FFE34E]"></div>
-            <div className="absolute top-10 right-10 w-4 h-4 bg-[#B197FC]"></div>
-          </div>
-        </section>
-
-        {/* Upcoming Events Section */}
-        <section className="bg-white rounded-[2.5rem] p-16 mb-20">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-normal text-black">Upcoming Events</h2>
-            <div className="flex gap-4">
-              <button className="px-6 py-2 rounded-full bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white transition-all">
+            {/* Time Filters */}
+            <div className="flex gap-4 mb-12">
+              <button
+                onClick={() => setTimeFilter("all")}
+                className={`px-6 py-2 rounded-full ${
+                  timeFilter === "all"
+                    ? "bg-[#B197FC] text-white"
+                    : "bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white"
+                } transition-all`}
+              >
+                All Events
+              </button>
+              <button
+                onClick={() => setTimeFilter("today")}
+                className={`px-6 py-2 rounded-full ${
+                  timeFilter === "today"
+                    ? "bg-[#B197FC] text-white"
+                    : "bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white"
+                } transition-all`}
+              >
                 Today
               </button>
-              <button className="px-6 py-2 rounded-full bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white transition-all">
-                This Week
-              </button>
-              <button className="px-6 py-2 rounded-full bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white transition-all">
+              <button
+                onClick={() => setTimeFilter("month")}
+                className={`px-6 py-2 rounded-full ${
+                  timeFilter === "month"
+                    ? "bg-[#B197FC] text-white"
+                    : "bg-[#F8F8F9] text-black hover:bg-[#B197FC] hover:text-white"
+                } transition-all`}
+              >
                 This Month
               </button>
             </div>
-          </div>
+          </section>
 
-          <div className="grid grid-cols-3 gap-8">
-            {upcomingEvents.map((event, index) => (
-              <div
-                key={index}
-                className="bg-[#F8F8F9] p-8 rounded-3xl hover:shadow-lg transition-all"
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
-                    <Image
-                      src={event.icon}
-                      alt={event.category}
-                      width={24}
-                      height={24}
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-medium text-black">
-                      {event.title}
-                    </h3>
-                    <p className="text-black">{event.category}</p>
-                  </div>
-                </div>
+          {/* Events Grid */}
+          <section className="mb-20">
+            <div className="grid grid-cols-3 gap-8">
+              {filteredEvents.map((event) => (
+                <EventCard
+                  key={event.id}
+                  id={event.id}
+                  title={event.title}
+                  date={`${event.date} ${event.time}`}
+                  location={event.location}
+                  image={event.image}
+                />
+              ))}
+            </div>
+          </section>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-4 py-1 rounded-full bg-[#FFE34E20] text-black text-sm">
-                    {event.type}
-                  </span>
-                  <span className="px-4 py-1 rounded-full bg-[#B197FC20] text-black text-sm">
-                    {event.location}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <span className="text-black">{event.date}</span>
-                  <button className="text-[#B197FC] hover:text-[#9F82E3] transition-colors font-medium">
-                    Register →
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="mb-20">
-          <div className="bg-[#B197FC] rounded-[2.5rem] p-16 text-center">
-            <h2 className="text-white text-4xl font-normal mb-6">
-              Want to organize an event?
+          {/* Cities Section */}
+          <section className="mb-20">
+            <h2 className="text-2xl font-medium text-black mb-8">
+              Explore Local Events
             </h2>
-            <p className="text-white/90 max-w-xl mx-auto mb-8">
-              Create and manage your events with our easy-to-use platform. Reach
-              more attendees and grow your community.
-            </p>
-            <button className="bg-white text-[#B197FC] px-8 py-4 rounded-full hover:bg-opacity-90 transition-colors font-medium">
-              Start Organizing →
-            </button>
-          </div>
-        </section>
-      </div>
-    </main>
+            <div className="grid grid-cols-6 gap-6">
+              {cities.map((city) => (
+                <div
+                  key={city.code}
+                  className="bg-white p-6 rounded-2xl text-center"
+                >
+                  <div className="w-12 h-12 bg-[#B197FC] rounded-full mx-auto mb-3 flex items-center justify-center">
+                    <span className="text-white font-medium">{city.code}</span>
+                  </div>
+                  <h3 className="text-black font-medium mb-1">{city.name}</h3>
+                  <p className="text-gray-600 text-sm">
+                    {city.eventCount} Events
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
   );
-};
-
-export default Home;
+}

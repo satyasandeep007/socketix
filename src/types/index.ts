@@ -1,15 +1,20 @@
-export interface Event {
+export type Event = {
   id: string;
   title: string;
+  category: string;
   description: string;
   date: string;
   time: string;
   location: string;
+  type: string;
   capacity: number;
   attendees: number;
   organizer: User;
-  image: "fitness" | "hackathon" | "conference" | "default";
-}
+  image: {
+    src: string;
+    type: string;
+  };
+};
 
 export interface User {
   id: string;
