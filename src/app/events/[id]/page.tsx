@@ -30,21 +30,21 @@ export default function EventPage() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen bg-[#F8FAFC]"
+      className="min-h-screen bg-[#F0F7FF]"
     >
       <div className="max-w-7xl mx-auto px-4 pt-8 pb-12">
-        <div className="grid grid-cols-[2fr,1fr] gap-8">
+        <div className="grid grid-cols-[1.2fr,1fr] gap-8">
           {/* Left Column - Event Image */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="rounded-2xl overflow-hidden shadow-sm bg-white"
+            className="rounded-3xl overflow-hidden shadow-md"
           >
             <EventImage
               title={event.title}
               type={event.image}
               fill
-              className="rounded-2xl"
+              className="rounded-3xl"
             />
           </motion.div>
 
@@ -53,28 +53,26 @@ export default function EventPage() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="space-y-6"
+            className="space-y-6 bg-white p-6 rounded-3xl shadow-sm"
           >
             {/* Location Badge */}
             <div className="flex items-center gap-2 text-sm">
-              <span className="bg-amber-50 text-amber-800 px-3 py-1 rounded-full text-sm">
-                Featured in Bengaluru
+              <span className="bg-amber-50 text-amber-800 px-4 py-1.5 rounded-full">
+                Featured in {event.city}
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl font-semibold text-gray-900">
-              {event.title}
-            </h1>
+            <h1 className="text-4xl font-bold text-gray-900">{event.title}</h1>
 
             {/* Date and Time */}
-            <div className="flex items-center gap-4">
-              <div className="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+            <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl">
+              <div className="bg-white rounded-xl p-3 shadow-sm">
                 <div className="text-xs text-gray-500 uppercase">DEC</div>
-                <div className="text-xl font-semibold text-gray-900">8</div>
+                <div className="text-2xl font-bold text-gray-900">8</div>
               </div>
               <div>
-                <div className="font-medium text-gray-900">
+                <div className="font-semibold text-gray-900">
                   Sunday 8 December
                 </div>
                 <div className="text-gray-600">7:00 am - 9:30 am</div>
@@ -82,38 +80,33 @@ export default function EventPage() {
             </div>
 
             {/* Location */}
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <div className="bg-gray-50 rounded-2xl p-4">
               <div className="flex items-start gap-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
+                  fill="currentColor"
                   className="w-5 h-5 text-gray-400 mt-0.5"
                 >
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                    fillRule="evenodd"
+                    d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z"
+                    clipRule="evenodd"
                   />
                 </svg>
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-semibold text-gray-900">
                     {event.location}
                   </div>
-                  <div className="text-gray-500">Bengaluru, Karnataka</div>
+                  <div className="text-gray-500">
+                    {event.city}, {event.state}
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Registration Section */}
-            <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 space-y-5">
+            <div className="bg-gray-50 rounded-2xl p-5 space-y-5">
               <div className="flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -176,23 +169,28 @@ export default function EventPage() {
             </div>
 
             {/* Host */}
-            <div>
-              <h3 className="text-sm font-medium text-gray-900 mb-2">
+            <div className="bg-gray-50 rounded-2xl p-4">
+              <h3 className="text-sm font-medium text-gray-500 mb-3">
                 Hosted By
               </h3>
-              <motion.div
-                whileHover={{ scale: 1.01 }}
-                className="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm border border-gray-100"
-              >
-                <Avatar
-                  src={event.organizer.image}
-                  alt={event.organizer.name}
-                  size={36}
-                />
-                <span className="font-medium text-gray-900">
-                  {event.organizer.name}
-                </span>
-              </motion.div>
+              <div className="flex flex-col gap-2">
+                {event.organizers?.map((organizer, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.01 }}
+                    className="flex items-center gap-3 bg-white p-3 rounded-xl"
+                  >
+                    <Avatar
+                      src={organizer.image}
+                      alt={organizer.name}
+                      size={36}
+                    />
+                    <span className="font-medium text-gray-900">
+                      {organizer.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
             {/* Attendees */}
