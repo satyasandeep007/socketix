@@ -66,7 +66,7 @@ export default function EventPage() {
               <h3>Organized by</h3>
               <div className="flex items-center gap-2">
                 <Image
-                  src={event.organizer.image || "/default-avatar.png"}
+                  src={event.organizer.image || ""}
                   alt={event.organizer.name}
                   width={40}
                   height={40}

@@ -1,17 +1,19 @@
 import { Event, User } from "@/types";
 
-const dummyUsers: User[] = [
+export const dummyUsers: User[] = [
   {
     id: "1",
     name: "John Doe",
     email: "john@example.com",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    image:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=John&backgroundColor=b6e3f4",
   },
   {
     id: "2",
     name: "Jane Smith",
     email: "jane@example.com",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
+    image:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane&backgroundColor=c0aede",
   },
 ];
 

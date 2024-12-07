@@ -16,7 +16,9 @@ const Navbar = () => {
             height={32}
             className="dark:invert"
           />
-          <span className="text-xl font-bold text-white">EventHub</span>
+          <span className="text-xl font-bold text-white">
+            <Link href="/">EventHub</Link>
+          </span>
         </div>
 
         <div className="flex items-center gap-4">

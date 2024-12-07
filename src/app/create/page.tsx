@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { eventCovers, getRandomCover } from "@/lib/images";
+import Link from "next/link";
+import Avatar from "@/components/Avatar";
 
 export default function CreateEventPage() {
   const router = useRouter();
@@ -42,12 +44,26 @@ export default function CreateEventPage() {
       <nav className="fixed w-full p-4 bg-slate-900/80 backdrop-blur-sm z-50 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <Image
+            <Link href="/" className="text-gray-400 hover:text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </Link>
+            <Avatar
               src={session?.user?.image || "/default-avatar.png"}
               alt="Profile"
-              width={32}
-              height={32}
-              className="rounded-full"
+              size={32}
             />
             <span className="text-gray-400">Personal Calendar</span>
           </div>
@@ -60,7 +76,7 @@ export default function CreateEventPage() {
       </nav>
 
       {/* Main Content */}
-      <main className="pt-20 px-4">
+      <main className="pt-28 px-4 pb-20">
         <div className="max-w-4xl mx-auto grid grid-cols-[300px,1fr] gap-8">
           {/* Event Cover */}
           <div className="space-y-4">
@@ -97,31 +113,46 @@ export default function CreateEventPage() {
 
               {/* Cover Options Modal */}
               {showCoverOptions && (
-                <div className="absolute top-0 left-0 right-0 bg-slate-800 rounded-xl p-4 shadow-lg z-10">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-white font-medium">Choose Cover</h3>
-                    <button
-                      onClick={() => setShowCoverOptions(false)}
-                      className="text-gray-400 hover:text-white"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {eventCovers.map((cover, index) => (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                  <div className="bg-slate-800 rounded-xl p-6 max-w-lg w-full">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-white font-medium">Choose Cover</h3>
                       <button
-                        key={index}
-                        onClick={() => handleCoverChange(cover)}
-                        className="aspect-square relative rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500"
+                        onClick={() => setShowCoverOptions(false)}
+                        className="text-gray-400 hover:text-white p-2"
                       >
-                        <Image
-                          src={cover}
-                          alt={`Cover option ${index + 1}`}
-                          fill
-                          className="object-cover"
-                        />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
                       </button>
-                    ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {eventCovers.map((cover, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleCoverChange(cover)}
+                          className="aspect-square relative rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500"
+                        >
+                          <Image
+                            src={cover}
+                            alt={`Cover option ${index + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
