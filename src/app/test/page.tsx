@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
@@ -6,8 +7,13 @@ import {
   mintNewTicket,
 } from "@/utils/ethersUtil";
 import { useState } from "react";
+import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 
 const TestPage = () => {
+  const { address, isConnected } = useAccount();
+  const publicClient = usePublicClient();
+  const { data: walletClient } = useWalletClient();
+
   const [contractInfo, setContractInfo] = useState<{
     name: string;
     symbol: string;
@@ -15,23 +21,52 @@ const TestPage = () => {
   const [tokenUri, setTokenUri] = useState<string | null>(null);
   const [mintReceipt, setMintReceipt] = useState<any | null>(null);
   const [tokenId, setTokenId] = useState<number>(1);
-  const [mintAddress, setMintAddress] = useState<string>("");
   const [mintAmount, setMintAmount] = useState<number>(1);
 
   const handleGetContractInfo = async () => {
-    const info = await getContractInfo();
-    setContractInfo(info);
+    console.log(publicClient, "publicClient");
+    console.log(walletClient, "walletClient");
+    console.log(isConnected, "isConnected");
+    if (!isConnected) {
+      alert("Please connect your wallet using the button in the navbar");
+      return;
+    }
+    try {
+      const info = await getContractInfo(publicClient);
+
+      console.log(info, "info");
+      setContractInfo(info);
+    } catch (error) {
+      console.error("Error getting contract info:", error);
+    }
   };
 
   const handleGetTokenUri = async () => {
-    const uri = await getTokenUri(tokenId);
-    setTokenUri(uri);
+    if (!isConnected) {
+      alert("Please connect your wallet using the button in the navbar");
+      return;
+    }
+    try {
+      const uri = await getTokenUri(tokenId, publicClient);
+      setTokenUri(uri);
+    } catch (error) {
+      console.error("Error getting token URI:", error);
+    }
   };
 
   const handleMintTicket = async () => {
+    if (!isConnected || !walletClient) {
+      alert("Please connect your wallet using the button in the navbar");
+      return;
+    }
     try {
-      const receipt = await mintNewTicket(mintAddress, tokenId, mintAmount);
-      setMintReceipt(receipt);
+      const hash = await mintNewTicket(
+        address!,
+        tokenId,
+        mintAmount,
+        walletClient
+      );
+      setMintReceipt({ hash });
     } catch (error) {
       console.error("Error minting ticket:", error);
     }
@@ -82,13 +117,6 @@ const TestPage = () => {
       {/* Mint Ticket Section */}
       <div className="w-full max-w-md">
         <div className="flex flex-col gap-4">
-          <input
-            type="text"
-            value={mintAddress}
-            onChange={(e) => setMintAddress(e.target.value)}
-            className="border p-2 rounded-md"
-            placeholder="Address to mint to"
-          />
           <input
             type="number"
             value={tokenId}
