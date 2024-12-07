@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // ABI for the functions we'll use
-const ticketsABI = [
+export const ticketsABI = [
   {
     inputs: [
       { name: "to_", type: "address" },
