@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { eventCovers, getRandomCover } from "@/lib/images";
-import Avatar from "@/components/Avatar";
 
 export default function CreateEventPage() {
   const [formData, setFormData] = useState({
@@ -37,38 +35,6 @@ export default function CreateEventPage() {
   return (
     <div className="min-h-screen bg-[#F8F8F9] font-poppins">
       {/* Navigation */}
-      <nav className="bg-white/80 py-4">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              <Link
-                href="/"
-                className="text-black hover:text-[#B197FC] transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </Link>
-              <Avatar src={"/default-avatar.png"} alt="Profile" size={32} />
-              <span className="text-black/60">Personal Calendar</span>
-            </div>
-            <button className="px-6 py-2.5 bg-[#B197FC] text-white rounded-full hover:bg-[#9F82E3] transition-colors">
-              Public
-            </button>
-          </div>
-        </div>
-      </nav>
 
       {/* Main Content */}
       <main className="pt-32 px-8 pb-20">
