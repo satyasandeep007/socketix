@@ -16,10 +16,6 @@ import { GlobalProvider } from "./GlobalContext";
 
 const queryClient = new QueryClient();
 
-if (!projectId) {
-  throw new Error("Project ID is not defined");
-}
-
 const metadata = {
   name: "Socketix",
   description: "Cross Chain Ticketing Platform",
