@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Wallet, Contract, JsonRpcProvider } from "ethers";
 
-export function prepareMintTransaction(tokenId: number) {
+export async function prepareMintTransaction(tokenId: number) {
   const provider = new JsonRpcProvider(
     "https://rpc-socket-composer-testnet.t.conduit.xyz"
   );
@@ -60,17 +60,10 @@ export function prepareMintTransaction(tokenId: number) {
     .map((data) => data.forwarderAddress)
     .filter((address) => address !== "0x");
 
-  contract
-    .mint("0xC68C49606888f10Cc6Ed0a4F58ba5A6c1F0EfD33", BigInt(tokenId))
-    .then((res) => {
-      console.log("Transaction sent:", res);
-      console.log(res);
-    });
+  const tx = await contract.mint(
+    "0xC68C49606888f10Cc6Ed0a4F58ba5A6c1F0EfD33",
+    BigInt(tokenId)
+  );
 
-  console.log("Preparing transaction with:", {
-    address: SOCKET_GATEWAY_ADDRESS,
-    instances,
-    tokenId,
-  });
-  return true;
+  return tx;
 }

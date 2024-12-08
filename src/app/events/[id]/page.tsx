@@ -35,26 +35,38 @@ export default function EventDetailPage() {
 
     try {
       setIsLoading(true);
-      toast.loading("Preparing your ticket purchase...");
+      const loadingToast = toast.loading("Preparing your ticket purchase...");
 
       const tx = await prepareMintTransaction(Number(id));
+      console.log(tx);
       //   writeContract(tx);
 
-      toast.dismiss();
+      // Dismiss the loading toast after 2 seconds
       setTimeout(() => {
-        toast.loading("Please confirm the transaction in your wallet...");
-      }, 1000);
-      setIsRegistered(true);
-      toast.success("🎉 Successfully purchased your ticket!");
+        toast.dismiss(loadingToast);
+        // Show success toast after dismissing loading toast
+        setTimeout(() => {
+          toast.success("🎉 Successfully purchased your ticket!");
+          // Show transaction hash in a separate toast with clickable link
+          setTimeout(() => {
+            toast.info(
+              <a
+                href={`https://explorer-socket-composer-testnet.t.conduit.xyz/tx/${tx.hash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:text-blue-700"
+              >
+                Transaction Hash: @{tx.hash}
+              </a>,
+              {
+                autoClose: 5000,
+              }
+            );
+          }, 500);
+        }, 100);
+      }, 2000);
 
-      // Optional: Show additional information
-      //   toast.message("Ticket Details", {
-      //     description: "You can view your ticket in your wallet.",
-      //     action: {
-      //       label: "View Transaction",
-      //       onClick: () => window.open(`https://arbiscan.io/tx/`, "_blank"),
-      //     },
-      //   });
+      setIsRegistered(true);
     } catch (error) {
       console.error("Registration failed:", error);
       toast.error("Failed to prepare transaction. Please try again.");
