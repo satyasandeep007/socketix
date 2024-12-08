@@ -6,7 +6,7 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
-import { prepareIncrementTransaction } from "@/utils/ethersUtil";
+import { prepareMintTransaction } from "@/utils/ethersUtil";
 
 const TestPage = () => {
   const { isConnected } = useAccount();
@@ -25,7 +25,7 @@ const TestPage = () => {
     }
 
     try {
-      const tx = await prepareIncrementTransaction(1);
+      const tx = await prepareMintTransaction(1);
       writeContract(tx);
     } catch (error) {
       console.error("Error:", error);

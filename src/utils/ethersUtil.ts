@@ -55,8 +55,13 @@ export const SOCKET_GATEWAY_ABI = [
         name: "instances",
         type: "address[]",
       },
+      {
+        internalType: "uint256",
+        name: "tokenId_",
+        type: "uint256",
+      },
     ],
-    name: "incrementCounters",
+    name: "mint",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -66,7 +71,7 @@ export const SOCKET_GATEWAY_ABI = [
 export const SOCKET_GATEWAY_ADDRESS =
   "0xcCbF487fce0355197d38431fd252f8a81d04A030";
 
-export async function prepareIncrementTransaction(tokenId: number) {
+export function prepareMintTransaction(tokenId: number) {
   const instances = Object.values(socketConfig)
     .map((data) => data.forwarderAddress)
     .filter((address) => address !== "0x");
@@ -74,12 +79,13 @@ export async function prepareIncrementTransaction(tokenId: number) {
   console.log("Preparing transaction with:", {
     address: SOCKET_GATEWAY_ADDRESS,
     instances,
+    tokenId,
   });
 
   return {
     address: SOCKET_GATEWAY_ADDRESS as `0x${string}`,
     abi: SOCKET_GATEWAY_ABI,
-    functionName: "incrementCounters",
-    args: [instances] as const,
+    functionName: "mint",
+    args: [instances, BigInt(tokenId)] as const,
   };
 }
