@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Wallet, Contract, JsonRpcProvider } from "ethers";
 
-export async function prepareMintTransaction(tokenId: number) {
+export async function prepareMintTransaction(tokenId: number, chainId: number) {
   const provider = new JsonRpcProvider(
     "https://rpc-socket-composer-testnet.t.conduit.xyz"
   );
 
-  const privatekey = "";
+  const privatekey =
+    "0xc82db42d7ceaa3ec825793556a01e292a802be1d3b3abff50a03d59bf52ab037";
 
   const wallet = new Wallet(privatekey, provider);
 
@@ -50,18 +51,19 @@ export async function prepareMintTransaction(tokenId: number) {
       forwarderAddress: "0x0eedB4D0857570fd09d0Fb098A243d6dfa58AEDf",
       chainId: 11155420,
     },
-    // base: {
-    //   onChainAddress: "0x8576B555C41CAce4830b34A6B893cFd975E7bA9c",
-    //   forwarderAddress: "0xC68C49606888f10Cc6Ed0a4F58ba5A6c1F0EfD33",
-    //   chainId: 84532,
-    // },
   };
-  const instances = Object.values(socketConfig)
-    .map((data) => data.forwarderAddress)
-    .filter((address) => address !== "0x");
+
+  // Find the config for the specified chainId
+  const selectedConfig = Object.values(socketConfig).find(
+    (config) => config.chainId === chainId
+  );
+
+  if (!selectedConfig) {
+    throw new Error(`No configuration found for chainId ${chainId}`);
+  }
 
   const tx = await contract.mint(
-    "0xC68C49606888f10Cc6Ed0a4F58ba5A6c1F0EfD33",
+    selectedConfig.forwarderAddress,
     BigInt(tokenId)
   );
 

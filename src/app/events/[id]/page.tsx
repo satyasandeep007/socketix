@@ -4,27 +4,29 @@ import Link from "next/link";
 import { getEventById } from "@/lib/data";
 import EventImage from "@/components/EventImage";
 import { useState, useEffect } from "react";
-import {
-  useAccount,
-  useWriteContract,
-  useWaitForTransactionReceipt,
-} from "wagmi";
 import { prepareMintTransaction } from "@/utils/ethersUtil";
 import { toast } from "react-toastify";
+import { useAccount } from "wagmi";
+
+// Add this constant at the top of the file, outside the component
+const SUPPORTED_CHAINS = [
+  { id: 11155111, name: "Ethereum Sepolia" },
+  { id: 84532, name: "Base Sepolia" },
+  { id: 421614, name: "Arbitrum Sepolia" },
+  { id: 11155420, name: "Optimism Sepolia" },
+];
 
 export default function EventDetailPage() {
   const { id } = useParams();
   const event = getEventById(id as string);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedChain, setSelectedChain] = useState(SUPPORTED_CHAINS[0].id);
 
   // Add Wagmi hooks
-  const { isConnected } = useAccount();
-  //   const { data: hash, isPending, writeContract, error } = useWriteContract();
-  //   const { isLoading: isConfirming, isSuccess: isConfirmed } =
-  //     useWaitForTransactionReceipt({
-  //       hash,
-  //     });
+  const { isConnected, address, connector, status, chain } = useAccount();
+
+  console.log(isConnected, address, connector, status, chain, "account");
 
   // Update handleRegister
   const handleRegister = async () => {
@@ -37,7 +39,7 @@ export default function EventDetailPage() {
       setIsLoading(true);
       const loadingToast = toast.loading("Preparing your ticket purchase...");
 
-      const tx = await prepareMintTransaction(Number(id));
+      const tx = await prepareMintTransaction(Number(id), selectedChain);
       console.log(tx);
       //   writeContract(tx);
 
@@ -144,22 +146,36 @@ export default function EventDetailPage() {
                   {event.category}
                 </span>
               </div>
-              <button
-                onClick={handleRegister}
-                disabled={isRegistered || isLoading}
-                className={`bg-black text-white px-8 py-4 rounded-lg transition-colors font-medium
-                  ${
-                    isRegistered || isLoading
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-black/80"
-                  }`}
-              >
-                {isLoading
-                  ? "Preparing..."
-                  : isRegistered
-                  ? "Ticket Minted ✓"
-                  : "Buy Ticket"}
-              </button>
+              <div className="flex gap-4 items-center mb-8">
+                <select
+                  value={selectedChain}
+                  onChange={(e) => setSelectedChain(Number(e.target.value))}
+                  className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-black"
+                >
+                  {SUPPORTED_CHAINS.map((chain) => (
+                    <option key={chain.id} value={chain.id}>
+                      {chain.name}
+                    </option>
+                  ))}
+                </select>
+
+                <button
+                  onClick={handleRegister}
+                  disabled={isRegistered || isLoading}
+                  className={`bg-black text-white px-8 py-4 rounded-lg transition-colors font-medium
+                    ${
+                      isRegistered || isLoading
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-black/80"
+                    }`}
+                >
+                  {isLoading
+                    ? "Preparing..."
+                    : isRegistered
+                    ? "Ticket Minted ✓"
+                    : "Buy Ticket"}
+                </button>
+              </div>
               {/* Share Button */}
               <button
                 onClick={handleShare}
