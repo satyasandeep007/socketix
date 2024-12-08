@@ -3,18 +3,64 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { getEventById } from "@/lib/data";
 import EventImage from "@/components/EventImage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  useAccount,
+  useWriteContract,
+  useWaitForTransactionReceipt,
+} from "wagmi";
+import { prepareMintTransaction } from "@/utils/ethersUtil";
+import { toast } from "react-toastify";
 
 export default function EventDetailPage() {
   const { id } = useParams();
   const event = getEventById(id as string);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Handle registration
-  const handleRegister = () => {
-    // Here you would typically make an API call to register
-    setIsRegistered(true);
-    alert("Successfully registered for the event!"); // Replace with proper notification
+  // Add Wagmi hooks
+  const { isConnected } = useAccount();
+  //   const { data: hash, isPending, writeContract, error } = useWriteContract();
+  //   const { isLoading: isConfirming, isSuccess: isConfirmed } =
+  //     useWaitForTransactionReceipt({
+  //       hash,
+  //     });
+
+  // Update handleRegister
+  const handleRegister = async () => {
+    if (!isConnected) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      toast.loading("Preparing your ticket purchase...");
+
+      const tx = await prepareMintTransaction(Number(id));
+      //   writeContract(tx);
+
+      toast.dismiss();
+      setTimeout(() => {
+        toast.loading("Please confirm the transaction in your wallet...");
+      }, 1000);
+      setIsRegistered(true);
+      toast.success("🎉 Successfully purchased your ticket!");
+
+      // Optional: Show additional information
+      //   toast.message("Ticket Details", {
+      //     description: "You can view your ticket in your wallet.",
+      //     action: {
+      //       label: "View Transaction",
+      //       onClick: () => window.open(`https://arbiscan.io/tx/`, "_blank"),
+      //     },
+      //   });
+    } catch (error) {
+      console.error("Registration failed:", error);
+      toast.error("Failed to prepare transaction. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Handle share
@@ -88,15 +134,19 @@ export default function EventDetailPage() {
               </div>
               <button
                 onClick={handleRegister}
-                disabled={isRegistered}
+                disabled={isRegistered || isLoading}
                 className={`bg-black text-white px-8 py-4 rounded-lg transition-colors font-medium
                   ${
-                    isRegistered
+                    isRegistered || isLoading
                       ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-black]"
+                      : "hover:bg-black/80"
                   }`}
               >
-                {isRegistered ? "Ticket Minted ✓" : "Buy Ticket"}
+                {isLoading
+                  ? "Preparing..."
+                  : isRegistered
+                  ? "Ticket Minted ✓"
+                  : "Buy Ticket"}
               </button>
               {/* Share Button */}
               <button

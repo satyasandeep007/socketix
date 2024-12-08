@@ -72,11 +72,5 @@ export function prepareMintTransaction(tokenId: number) {
     instances,
     tokenId,
   });
-
-  return {
-    address: SOCKET_GATEWAY_ADDRESS as `0x${string}`,
-    abi: SOCKET_GATEWAY_ABI,
-    functionName: "mint",
-    args: [instances, BigInt(tokenId)] as const,
-  };
+  return true;
 }
