@@ -8,6 +8,8 @@ SockeTix solves the problem of fragmented event ticketing by enabling users to p
 
 ## Demo
 
+transaction: https://explorer-socket-composer-testnet.t.conduit.xyz/tx/0x79002655f7850cb4329db4e488992fa90e6785882b9ca1c6788628252c4c918a
+
 ### Landing Page
 
 ![Home](public/images/1.png)
@@ -21,7 +23,7 @@ SockeTix solves the problem of fragmented event ticketing by enabling users to p
 ## 🚀 Get Started
 
 **GitHub Repo**: [Repo Link](https://github.com/satyasandeep007/socketix)  
-**Video Demo**: [Demo Link](https://www.youtube.com/watch?v=5qQ5Y2z5Y1o)
+**Video Demo**: [Demo Link](https://youtu.be/QHVueQsXCkM)
 
 ## 🛠️ Stack We Used
 
