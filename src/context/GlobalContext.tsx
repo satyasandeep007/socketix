@@ -7,38 +7,115 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { useAccount } from "wagmi";
+import { toast } from "react-toastify";
 
-// Define the shape of the context
 interface GlobalContextType {
   isLoading: boolean;
+  isInitializing: boolean;
+  isConnected: boolean;
+  address: string | null;
+  connect: () => Promise<void>;
+  disconnect: () => Promise<void>;
 }
-// Define the initial state for the context
+
 const initialState: GlobalContextType = {
   isLoading: false,
+  isInitializing: true,
+  isConnected: false,
+  address: null,
+  connect: async () => {},
+  disconnect: async () => {},
 };
 
-// Create the context with the initial state
 const GlobalContext = createContext<GlobalContextType>(initialState);
 
 export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { address } = useAccount();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isInitializing, setIsInitializing] = useState<boolean>(true);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [address, setAddress] = useState<string | null>(null);
 
-  console.log(address);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  // Initialize wallet connection
   useEffect(() => {
-    if (address) {
+    const checkConnection = async () => {
+      try {
+        if (typeof window.ethereum !== "undefined") {
+          const accounts = await window.ethereum.request({
+            method: "eth_accounts",
+          });
+          if (accounts.length > 0) {
+            setAddress(accounts[0]);
+            setIsConnected(true);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to check wallet connection:", error);
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    checkConnection();
+
+    // Listen for account changes
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", (accounts: string[]) => {
+        if (accounts.length > 0) {
+          setAddress(accounts[0]);
+          setIsConnected(true);
+        } else {
+          setAddress(null);
+          setIsConnected(false);
+        }
+      });
+    }
+  }, []);
+
+  const connect = async () => {
+    if (typeof window.ethereum === "undefined") {
+      toast.error("Please install MetaMask!");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setAddress(accounts[0]);
+      setIsConnected(true);
+      toast.success("Wallet connected successfully!");
+    } catch (error) {
+      console.error("Connection error:", error);
+      toast.error("Failed to connect wallet");
+    } finally {
       setIsLoading(false);
     }
-  }, [address]);
+  };
+
+  const disconnect = async () => {
+    try {
+      setIsLoading(true);
+      setAddress(null);
+      setIsConnected(false);
+      toast.success("Wallet disconnected successfully!");
+    } catch (error) {
+      console.error("Disconnection error:", error);
+      toast.error("Failed to disconnect wallet");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const value: GlobalContextType = {
     isLoading,
+    isInitializing,
+    isConnected,
+    address,
+    connect,
+    disconnect,
   };
 
   return (
@@ -46,7 +123,6 @@ export const GlobalProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-// Create a custom hook to use the context
 export const useGlobalContext = () => {
   const context = useContext(GlobalContext);
   if (context === undefined) {

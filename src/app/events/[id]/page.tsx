@@ -3,10 +3,10 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { getEventById } from "@/lib/data";
 import EventImage from "@/components/EventImage";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { prepareMintTransaction } from "@/utils/ethersUtil";
 import { toast } from "react-toastify";
-import { useAccount } from "wagmi";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 // Add this constant at the top of the file, outside the component
 const SUPPORTED_CHAINS = [
@@ -23,10 +23,8 @@ export default function EventDetailPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedChain, setSelectedChain] = useState(SUPPORTED_CHAINS[0].id);
 
-  // Add Wagmi hooks
-  const { isConnected, address, connector, status, chain } = useAccount();
-
-  console.log(isConnected, address, connector, status, chain, "account");
+  // Use our GlobalContext instead of wagmi
+  const { isConnected, address } = useGlobalContext();
 
   // Update handleRegister
   const handleRegister = async () => {
@@ -39,9 +37,26 @@ export default function EventDetailPage() {
       setIsLoading(true);
       const loadingToast = toast.loading("Preparing your ticket purchase...");
 
+      // Check if we're on the correct network
+      const chainId = await window.ethereum.request({ method: "eth_chainId" });
+      if (parseInt(chainId, 16) !== selectedChain) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: `0x${selectedChain.toString(16)}` }],
+          });
+        } catch (switchError: any) {
+          // This error code indicates that the chain has not been added to MetaMask
+          if (switchError.code === 4902) {
+            toast.error("Please add this network to your MetaMask first");
+            return;
+          }
+          throw switchError;
+        }
+      }
+
       const tx = await prepareMintTransaction(Number(id), selectedChain);
       console.log(tx);
-      //   writeContract(tx);
 
       // Dismiss the loading toast after 2 seconds
       setTimeout(() => {
@@ -58,7 +73,7 @@ export default function EventDetailPage() {
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:text-blue-700"
               >
-                Transaction Hash: @{tx.hash}
+                Transaction Hash: {tx.hash}
               </a>,
               {
                 autoClose: 5000,

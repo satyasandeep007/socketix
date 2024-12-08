@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Wallet, Contract, JsonRpcProvider } from "ethers";
+import { Contract, BrowserProvider, JsonRpcSigner } from "ethers";
 
 export async function prepareMintTransaction(tokenId: number, chainId: number) {
-  const provider = new JsonRpcProvider(
-    "https://rpc-socket-composer-testnet.t.conduit.xyz"
-  );
+  // Get the provider from MetaMask
+  if (!window.ethereum) {
+    throw new Error("MetaMask is not installed");
+  }
 
-  const privatekey =
-    "0xc82db42d7ceaa3ec825793556a01e292a802be1d3b3abff50a03d59bf52ab037";
-
-  const wallet = new Wallet(privatekey, provider);
+  const provider = new BrowserProvider(window.ethereum);
+  const signer: JsonRpcSigner = await provider.getSigner();
 
   const SOCKET_GATEWAY_ADDRESS = "0xcCbF487fce0355197d38431fd252f8a81d04A030";
 
@@ -37,7 +36,7 @@ export async function prepareMintTransaction(tokenId: number, chainId: number) {
   const contract = new Contract(
     SOCKET_GATEWAY_ADDRESS,
     SOCKET_GATEWAY_ABI,
-    wallet
+    signer
   );
 
   const socketConfig = {
