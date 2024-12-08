@@ -1,29 +1,27 @@
 # SockeTix
 
-![Brand](public/brand-image.png)
+![Brand](public/images/title.png)
 
-**SockeTix: Your gateway to seamless cross-chain ticketing** 🎫✨
+**Cross-chain ticketing platform with Socket Protocol** 🎫✨
+
+SockeTix solves the problem of fragmented event ticketing by enabling users to purchase and access tickets seamlessly across multiple blockchain networks. It ensures low gas fees, faster transactions, and reduced failure rates by loadbalancing the load accross multiple L2 like Arbitrum, OPtimism, Base. it provids a hassle-free ticketing experience. With cross-chain compatibility, users can access events securely and efficiently from any supported chain
 
 ## Demo
 
 ### Landing Page
 
-![Home](public/home.png)
+![Home](public/images/1.png)
 
-### Dashboard Page
+![Dashboard](public/images/2.png)
 
-![Dashboard](public/dashboard.png)
-
-### Events Page
-
-![Events](public/events.png)
+![Events](public/images/3.png)
 
 <br>
 
 ## 🚀 Get Started
 
 **GitHub Repo**: [Repo Link](https://github.com/satyasandeep007/socketix)  
-**Live Demo**: [Demo Link](https://socketix.vercel.app)
+**Video Demo**: [Demo Link](https://www.youtube.com/watch?v=5qQ5Y2z5Y1o)
 
 ## 🛠️ Stack We Used
 
@@ -31,7 +29,6 @@
 - Next.js
 - TypeScript
 - Tailwind CSS
-- Reown Appkit
 
 ## 🏗️ Steps to Run the Project
 
